@@ -61,7 +61,7 @@ dkms.conf
 #Updated by Cristian Cristea (https://github.com/cristiancristea00)
 
 *.d
-*.ccspjt
+src/*.ccspjt
 *.pre
 *.p1
 *.lst
