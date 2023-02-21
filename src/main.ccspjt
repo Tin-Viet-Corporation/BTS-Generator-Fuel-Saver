@@ -1,24 +1,14 @@
 [PROJECT]
-Target=main.hex
+Target=build\main.hex
 Processor_Text=PIC18F26K20
 CCSVersion=5.109
 Compiler=PCH
 [Target Data]
 FileList=main.c
-[main.c]
+[build\main.c]
 Type=4
 [mru-list]
-1=main.c
-
-[fileformats]
-forcecoff=0
-
-[ProjectLog]
-Days=1
-D1=20-02-2023
-D1_L=2
-D1_L1=[77539]Project Opened.
-D1_L2=[77541]Project Closed.
+1=build\main.c
 [Units]
 Count=1
 1=main (main)
