@@ -61,7 +61,6 @@ dkms.conf
 #Updated by Cristian Cristea (https://github.com/cristiancristea00)
 
 *.d
-*.pjt
 *.pre
 *.p1
 *.lst
