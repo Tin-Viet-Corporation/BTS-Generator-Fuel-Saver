@@ -28,21 +28,33 @@ file_000=.
 file_001=.
 file_002=.
 file_003=.
+file_004=.
+file_005=.
+file_006=.
 [GENERATED_FILES]
 file_000=no
 file_001=no
 file_002=no
 file_003=no
+file_004=no
+file_005=no
+file_006=no
 [OTHER_FILES]
 file_000=no
 file_001=yes
 file_002=yes
 file_003=yes
+file_004=yes
+file_005=yes
+file_006=yes
 [FILE_INFO]
 file_000=D:\Tin Viet Telecom Corp\BTS-Generator-Fuel-Saver\src\main.c
 file_001=D:\Tin Viet Telecom Corp\BTS-Generator-Fuel-Saver\src\main.SYM
 file_002=D:\Tin Viet Telecom Corp\BTS-Generator-Fuel-Saver\src\main.TRE
 file_003=D:\Tin Viet Telecom Corp\BTS-Generator-Fuel-Saver\src\main.STA
+file_004=D:\Tin Viet Telecom Corp\BTS-Generator-Fuel-Saver\src\build\main.SYM
+file_005=D:\Tin Viet Telecom Corp\BTS-Generator-Fuel-Saver\src\build\main.TRE
+file_006=D:\Tin Viet Telecom Corp\BTS-Generator-Fuel-Saver\src\build\main.STA
 [SUITE_INFO]
 suite_guid={BA86BF99-4C07-4CE2-A9E7-C2A337910996}
 suite_state=
