@@ -5,11 +5,11 @@ device=PIC18F26K20
 [PATH_INFO]
 BuildDirPolicy=BuildDirIsProjectDir
 dir_src=
-dir_bin=C:\Program Files (x86)\PICC\Drivers
-dir_tmp=C:\Program Files (x86)\PICC\Drivers
+dir_bin=
+dir_tmp=
 dir_sin=
-dir_inc=C:\Program Files (x86)\PICC\Devices
-dir_lib=C:\Program Files (x86)\PICC\Drivers
+dir_inc=
+dir_lib=
 dir_lkr=
 [CAT_FILTERS]
 filter_src=*.c
@@ -25,28 +25,12 @@ subfolder_lib=
 subfolder_lkr=
 [FILE_SUBFOLDERS]
 file_000=.
-file_001=.
-file_002=.
-file_003=.
-file_004=.
 [GENERATED_FILES]
 file_000=no
-file_001=no
-file_002=no
-file_003=no
-file_004=no
 [OTHER_FILES]
 file_000=no
-file_001=yes
-file_002=yes
-file_003=yes
-file_004=yes
 [FILE_INFO]
-file_000=MAIN LONG.c
-file_001=lcd_lib_4bit.c
-file_002=MAIN LONG.SYM
-file_003=MAIN LONG.TRE
-file_004=MAIN LONG.STA
+file_000=src\main.c
 [SUITE_INFO]
 suite_guid={BA86BF99-4C07-4CE2-A9E7-C2A337910996}
 suite_state=

@@ -172,7 +172,7 @@ ROM Allocation:
 0001F2  @const1136.call
 0001F6  @const1137.call
 0001FA  interrupt_timer0
-00032E  @goto26963
+00032E  @goto54162
 000354  @delay_ms1
 00037E  disable_reset
 0003D6  LCD_SetData
@@ -187,12 +187,12 @@ ROM Allocation:
 00066C  @PSTRINGC_1002
 00068C  @PSTRINGR_1002
 0006B0  lcd_printf
-000760  @goto26580
+000760  @goto53820
 000786  @PSTRINGCN_1002
 0007AE  @DIV88
 0007DA  @PRINTF_U_1002
 000856  display
-000AAE  @goto26444
+000AAE  @goto53702
 000AD8  check_mn
 000B0A  key_scan
 000C38  strlen
@@ -201,40 +201,41 @@ ROM Allocation:
 000D60  default_data
 000D7C  write_data
 000E7C  process_up
-000F3A  @goto26767
+000F3A  @goto53988
 000F66  process_down
-001014  @goto26816
+001014  @goto54032
 001040  process_exit
 0010A0  display_center
-00159A  @goto26481
-0015CA  @goto26520
+00159A  @goto53734
+0015CA  @goto53758
 0015F8  MAIN
 0015F8  @cinit1
 001694  @cinit2
-0018E4  @goto26226
-001914  @goto26238
-001942  @goto26260
+0018E4  @goto53504
+001914  @goto53516
+001942  @goto53533
 0135  StrtoulGO
 0135  StrtolGO
 
 Project Directory:
-    E:\DAT 2022\TIET KIEM DIEN AN GIANG\LONG NAP CHO THIET BI AG T02-2023\
+    D:\Tin Viet Telecom Corp\BTS-Generator-Fuel-Saver\src\
 
 Project Files:
-    MAIN LONG.c                                             [13-Feb-23 10:54  CRC=4E039D5C]
-    C:\Program Files (x86)\PICC\Devices\18f26k20.h          [21-Jan-21 11:36  CRC=898E1EE4]
-    C:\Program Files (x86)\PICC\Drivers\stdlib.h            [30-Jun-20 13:21  CRC=452E14BB]
-    C:\Program Files (x86)\PICC\Drivers\stddef.h            [30-Jan-19 11:26  CRC=897CEC6C]
-    C:\Program Files (x86)\PICC\Drivers\string.h            [06-Apr-20 07:43  CRC=B1605627]
-    C:\Program Files (x86)\PICC\Drivers\ctype.h             [03-Jan-08 14:55  CRC=2D1F019F]
-    lcd_lib_4bit.c                                          [24-Jun-22 15:59  CRC=5AD94379]
+    main.c                                                  [20-Thg2-23 20:30  CRC=4E039D5C]
+    C:\Program Files (x86)\PICC\Devices\18f26k20.h          [06-Thg5-22 15:56  CRC=A6A4C6B5]
+    C:\Program Files (x86)\PICC\Drivers\stdlib.h            [30-Thg6-20 14:21  CRC=452E14BB]
+    C:\Program Files (x86)\PICC\drivers\stddef.h            [30-Thg1-19 12:26  CRC=897CEC6C]
+    C:\Program Files (x86)\PICC\drivers\string.h            [06-Thg4-20 08:43  CRC=B1605627]
+    C:\Program Files (x86)\PICC\drivers\ctype.h             [03-Thg1-08 15:55  CRC=2D1F019F]
+    lcd_lib_4bit.c                                          [20-Thg2-23 20:55  CRC=5AD94379]
+    C:\Program Files (x86)\PICC\Drivers\stddef.h            [30-Thg1-19 12:26  CRC=897CEC6C]
 
-Source signature=3A6E9C1F
+Source signature=0FA5D94F
 Program memory checksum=0000
-Hex file CRC=88CD
+Hex file CRC=7D91
 
 Units:
-    E:\DAT 2022\TIET KIEM DIEN AN GIANG\LONG NAP CHO THIET BI AG T02-2023\MAIN LONG (main)
+    D:\Tin Viet Telecom Corp\BTS-Generator-Fuel-Saver\src\main (main)
 
 Compiler Settings:
     Processor:      PIC18F26K20
@@ -243,16 +244,18 @@ Compiler Settings:
     Opt Level:      9
     Short,Int,Long: UNSIGNED: 1,8,16
     Float,Double:   32,32
+    ICD Provisions: Yes
     Compile Mode:   CCS5
+    Predefined symbols:
+       #define __DEBUG 1
+       #define __18F26K20 TRUE
 
 Output Files:
-    XREF file:   MAIN LONG.xsym
-    Errors:      MAIN LONG.err
-    Ext Symbols: MAIN LONG.esym
-    INHX32:      MAIN LONG.hex
-    Symbols:     MAIN LONG.sym
-    List:        MAIN LONG.lst
-    Debug/COFF:  MAIN LONG.cof
-    Project:     MAIN LONG.ccspjt
-    Call Tree:   MAIN LONG.tre
-    Statistics:  MAIN LONG.STA
+    Errors:      main.err
+    INHX32:      main.hex
+    Symbols:     main.sym
+    List:        main.lst
+    Debug/COFF:  main.cof
+    Project:     main.ccspjt
+    Call Tree:   main.tre
+    Statistics:  main.STA
