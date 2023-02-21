@@ -42,7 +42,7 @@ file_002=yes
 file_003=yes
 file_004=yes
 [FILE_INFO]
-file_000=src/MAIN LONG.c
+file_000=MAIN LONG.c
 file_001=lcd_lib_4bit.c
 file_002=MAIN LONG.SYM
 file_003=MAIN LONG.TRE
