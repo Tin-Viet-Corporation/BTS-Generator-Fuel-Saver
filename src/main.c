@@ -421,7 +421,7 @@ void display(char code_print)
       PRINTF(LCD_PUTCHAR, "TG TRI HOAN MPD");
       clear_lcd();
       LCD_PUTCMD(Line_2);
-      PRINTF(LCD_PUTCHAR, "PHUT: %01u", val_timer_tri_hoan);
+      PRINTF(LCD_PUTCHAR, "PHUT Long: %01u", val_timer_tri_hoan);
       clear_lcd();
       break;
    case 2: // delay 2

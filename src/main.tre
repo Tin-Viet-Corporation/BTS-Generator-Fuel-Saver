@@ -40,12 +40,12 @@
    ³  ³  ÀÄ@const1089  0/18  Ram=0
    ³  ÃÄdisable_reset  0/88  Ram=0
    ³  ³  ÀÄ*
-   ³  ÃÄ@goto53516  0/46  Ram=0
+   ³  ÃÄ@goto21796  0/46  Ram=0
    ³  ÃÄcheck_AC  0/70  Ram=0
-   ³  ÃÄ@goto53504  0/48  Ram=0
+   ³  ÃÄ@goto21784  0/48  Ram=0
    ³  ÃÄreset_timer_data  0/52  Ram=0
    ³  ÃÄdisplay  0/600  Ram=1
-   ³  ³  ÃÄ@goto53702  0/42  Ram=0
+   ³  ³  ÃÄ@goto21977  0/42  Ram=0
    ³  ³  ÃÄLCD_PutCmd  0/30  Ram=1
    ³  ³  ³  ÀÄ*
    ³  ³  ÃÄ@PSTRINGC_1002  0/32  Ram=2
@@ -59,7 +59,7 @@
    ³  ³  ³  ³  ÀÄ*
    ³  ³  ³  ÃÄ@PSTRINGC_1002  0/32  Ram=2
    ³  ³  ³  ³  ÀÄ*
-   ³  ³  ³  ÃÄ@goto53820  0/38  Ram=0
+   ³  ³  ³  ÃÄ@goto22096  0/38  Ram=0
    ³  ³  ³  ÃÄ@PSTRINGC_1002  0/32  Ram=2
    ³  ³  ³  ³  ÀÄ*
    ³  ³  ³  ÃÄ@PSTRINGC_1002  0/32  Ram=2
@@ -185,7 +185,7 @@
    ³  ÃÄcheck_mn  0/50  Ram=0
    ³  ÃÄreset_timer_data  0/52  Ram=0
    ³  ÃÄkey_scan  0/302  Ram=3
-   ³  ÃÄ@goto53533  0/34  Ram=0
+   ³  ÃÄ@goto21816  0/34  Ram=0
    ³  ÃÄLCD_Init  0/92  Ram=0
    ³  ³  ÀÄ*
    ³  ÃÄprocess_menu  0/126  Ram=2
@@ -194,13 +194,13 @@
    ³  ³  ÀÄstrcmp  0/118  Ram=5
    ³  ÃÄ@delay_ms1  0/42  Ram=1
    ³  ÃÄprocess_up  0/190  Ram=3
-   ³  ³  ÃÄ@goto53988  0/44  Ram=0
+   ³  ³  ÃÄ@goto22273  0/44  Ram=0
    ³  ³  ÃÄdefault_data  0/28  Ram=0
    ³  ³  ÀÄwrite_data  0/256  Ram=0
    ³  ÃÄwrite_data  0/256  Ram=0
    ³  ÃÄ@delay_ms1  0/42  Ram=1
    ³  ÃÄprocess_down  0/174  Ram=3
-   ³  ³  ÀÄ@goto54032  0/44  Ram=0
+   ³  ³  ÀÄ@goto22319  0/44  Ram=0
    ³  ÃÄwrite_data  0/256  Ram=0
    ³  ÃÄ@delay_ms1  0/42  Ram=1
    ³  ÃÄprocess_exit  0/96  Ram=3
@@ -218,8 +218,8 @@
    ³  ³  ³  ÀÄ*
    ³  ³  ÃÄLCD_PutCmd  0/30  Ram=1
    ³  ³  ³  ÀÄ*
-   ³  ³  ÃÄ@goto53758  0/46  Ram=0
-   ³  ³  ÃÄ@goto53734  0/48  Ram=0
+   ³  ³  ÃÄ@goto22044  0/46  Ram=0
+   ³  ³  ÃÄ@goto22009  0/48  Ram=0
    ³  ³  ÃÄdisplay  0/600  Ram=1
    ³  ³  ³  ÀÄ*
    ³  ³  ÃÄdisplay  0/600  Ram=1
@@ -311,4 +311,4 @@
    ³  ÀÄdisable_reset  0/88  Ram=0
    ³     ÀÄ*
    ÀÄinterrupt_timer0  0/308  Ram=0
-      ÀÄ@goto54162  0/38  Ram=0
+      ÀÄ@goto22454  0/38  Ram=0
