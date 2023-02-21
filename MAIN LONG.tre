@@ -1,0 +1,314 @@
+ÀÄMAIN LONG
+   ÃÄMAIN  0/748  Ram=2
+   ³  ÃÄ@cinit1  (Inline)  Ram=0
+   ³  ÃÄ@cinit2  (Inline)  Ram=0
+   ³  ÃÄdisable_reset  0/88  Ram=0
+   ³  ³  ÃÄ@delay_ms1  0/42  Ram=1
+   ³  ³  ÃÄ@delay_ms1  0/42  Ram=1
+   ³  ³  ÃÄ@delay_ms1  0/42  Ram=1
+   ³  ³  ÃÄ@delay_ms1  0/42  Ram=1
+   ³  ³  ÃÄ@delay_ms1  0/42  Ram=1
+   ³  ³  ÀÄ@delay_ms1  0/42  Ram=1
+   ³  ÃÄLCD_Init  0/92  Ram=0
+   ³  ³  ÃÄLCD_SetData  0/54  Ram=1
+   ³  ³  ÃÄ@delay_ms1  0/42  Ram=1
+   ³  ³  ÃÄLCD_SetData  0/54  Ram=1
+   ³  ³  ÃÄLCD_PulseEnable  0/30  Ram=0
+   ³  ³  ³  ÀÄ@delay_ms1  0/42  Ram=1
+   ³  ³  ÃÄLCD_PulseEnable  0/30  Ram=0
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄLCD_PulseEnable  0/30  Ram=0
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄLCD_SetData  0/54  Ram=1
+   ³  ³  ÃÄLCD_PulseEnable  0/30  Ram=0
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄLCD_PutCmd  0/30  Ram=1
+   ³  ³  ³  ÃÄLCD_SetData  0/54  Ram=1
+   ³  ³  ³  ÃÄLCD_PulseEnable  0/30  Ram=0
+   ³  ³  ³  ³  ÀÄ*
+   ³  ³  ³  ÃÄLCD_SetData  0/54  Ram=1
+   ³  ³  ³  ÀÄLCD_PulseEnable  0/30  Ram=0
+   ³  ³  ³     ÀÄ*
+   ³  ³  ÃÄLCD_PutCmd  0/30  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄLCD_PutCmd  0/30  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÀÄLCD_PutCmd  0/30  Ram=1
+   ³  ³     ÀÄ*
+   ³  ÃÄread_data  0/158  Ram=1
+   ³  ÃÄinit_data  0/160  Ram=4
+   ³  ³  ÀÄ@const1089  0/18  Ram=0
+   ³  ÃÄdisable_reset  0/88  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄ@goto26238  0/46  Ram=0
+   ³  ÃÄcheck_AC  0/70  Ram=0
+   ³  ÃÄ@goto26226  0/48  Ram=0
+   ³  ÃÄreset_timer_data  0/52  Ram=0
+   ³  ÃÄdisplay  0/600  Ram=1
+   ³  ³  ÃÄ@goto26444  0/42  Ram=0
+   ³  ³  ÃÄLCD_PutCmd  0/30  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGC_1002  0/32  Ram=2
+   ³  ³  ³  ÀÄLCD_PutChar  0/16  Ram=1
+   ³  ³  ³     ÀÄLCD_PutCmd  0/30  Ram=1
+   ³  ³  ³        ÀÄ*
+   ³  ³  ÃÄlcd_printf  0/176  Ram=1
+   ³  ³  ³  ÃÄ@PSTRINGC_1002  0/32  Ram=2
+   ³  ³  ³  ³  ÀÄ*
+   ³  ³  ³  ÃÄ@PSTRINGC_1002  0/32  Ram=2
+   ³  ³  ³  ³  ÀÄ*
+   ³  ³  ³  ÃÄ@PSTRINGC_1002  0/32  Ram=2
+   ³  ³  ³  ³  ÀÄ*
+   ³  ³  ³  ÃÄ@goto26580  0/38  Ram=0
+   ³  ³  ³  ÃÄ@PSTRINGC_1002  0/32  Ram=2
+   ³  ³  ³  ³  ÀÄ*
+   ³  ³  ³  ÃÄ@PSTRINGC_1002  0/32  Ram=2
+   ³  ³  ³  ³  ÀÄ*
+   ³  ³  ³  ÃÄ@PSTRINGC_1002  0/32  Ram=2
+   ³  ³  ³  ³  ÀÄ*
+   ³  ³  ³  ÃÄ@PSTRINGC_1002  0/32  Ram=2
+   ³  ³  ³  ³  ÀÄ*
+   ³  ³  ³  ÃÄ@PSTRINGC_1002  0/32  Ram=2
+   ³  ³  ³  ³  ÀÄ*
+   ³  ³  ³  ÃÄ@PSTRINGC_1002  0/32  Ram=2
+   ³  ³  ³  ³  ÀÄ*
+   ³  ³  ³  ÃÄ@PSTRINGR_1002  0/36  Ram=2
+   ³  ³  ³  ³  ÀÄLCD_PutChar  0/16  Ram=1
+   ³  ³  ³  ³     ÀÄ*
+   ³  ³  ³  ÀÄLCD_PutChar  0/16  Ram=1
+   ³  ³  ³     ÀÄ*
+   ³  ³  ÃÄLCD_PutCmd  0/30  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGCN_1002  0/40  Ram=3
+   ³  ³  ³  ÀÄLCD_PutChar  0/16  Ram=1
+   ³  ³  ³     ÀÄ*
+   ³  ³  ÃÄ@PRINTF_U_1002  0/124  Ram=2
+   ³  ³  ³  ÃÄ@DIV88  0/44  Ram=3
+   ³  ³  ³  ÃÄLCD_PutChar  0/16  Ram=1
+   ³  ³  ³  ³  ÀÄ*
+   ³  ³  ³  ÃÄ@DIV88  0/44  Ram=3
+   ³  ³  ³  ÃÄLCD_PutChar  0/16  Ram=1
+   ³  ³  ³  ³  ÀÄ*
+   ³  ³  ³  ÀÄLCD_PutChar  0/16  Ram=1
+   ³  ³  ³     ÀÄ*
+   ³  ³  ÃÄlcd_printf  0/176  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄLCD_PutCmd  0/30  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGC_1002  0/32  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄlcd_printf  0/176  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄLCD_PutCmd  0/30  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGCN_1002  0/40  Ram=3
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PRINTF_U_1002  0/124  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄlcd_printf  0/176  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄLCD_PutCmd  0/30  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGC_1002  0/32  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄlcd_printf  0/176  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄLCD_PutCmd  0/30  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGCN_1002  0/40  Ram=3
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PRINTF_U_1002  0/124  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄlcd_printf  0/176  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄLCD_PutCmd  0/30  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGC_1002  0/32  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄlcd_printf  0/176  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄLCD_PutCmd  0/30  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGCN_1002  0/40  Ram=3
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PRINTF_U_1002  0/124  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄlcd_printf  0/176  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄLCD_PutCmd  0/30  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGC_1002  0/32  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄlcd_printf  0/176  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄLCD_PutCmd  0/30  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄlcd_printf  0/176  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄLCD_PutCmd  0/30  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGC_1002  0/32  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄlcd_printf  0/176  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄLCD_PutCmd  0/30  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGC_1002  0/32  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄlcd_printf  0/176  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄLCD_PutCmd  0/30  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGC_1002  0/32  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄlcd_printf  0/176  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄLCD_PutCmd  0/30  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGCN_1002  0/40  Ram=3
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PRINTF_U_1002  0/124  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄlcd_printf  0/176  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄLCD_PutCmd  0/30  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGC_1002  0/32  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄlcd_printf  0/176  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄLCD_PutCmd  0/30  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÀÄlcd_printf  0/176  Ram=1
+   ³  ³     ÀÄ*
+   ³  ÃÄcheck_mn  0/50  Ram=0
+   ³  ÃÄcheck_mn  0/50  Ram=0
+   ³  ÃÄreset_timer_data  0/52  Ram=0
+   ³  ÃÄkey_scan  0/302  Ram=3
+   ³  ÃÄ@goto26260  0/34  Ram=0
+   ³  ÃÄLCD_Init  0/92  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄprocess_menu  0/126  Ram=2
+   ³  ³  ÃÄstrlen  0/52  Ram=5
+   ³  ³  ÃÄstrlen  0/52  Ram=5
+   ³  ³  ÀÄstrcmp  0/118  Ram=5
+   ³  ÃÄ@delay_ms1  0/42  Ram=1
+   ³  ÃÄprocess_up  0/190  Ram=3
+   ³  ³  ÃÄ@goto26767  0/44  Ram=0
+   ³  ³  ÃÄdefault_data  0/28  Ram=0
+   ³  ³  ÀÄwrite_data  0/256  Ram=0
+   ³  ÃÄwrite_data  0/256  Ram=0
+   ³  ÃÄ@delay_ms1  0/42  Ram=1
+   ³  ÃÄprocess_down  0/174  Ram=3
+   ³  ³  ÀÄ@goto26816  0/44  Ram=0
+   ³  ÃÄwrite_data  0/256  Ram=0
+   ³  ÃÄ@delay_ms1  0/42  Ram=1
+   ³  ÃÄprocess_exit  0/96  Ram=3
+   ³  ÃÄ@delay_ms1  0/42  Ram=1
+   ³  ÃÄdisable_reset  0/88  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄLCD_Init  0/92  Ram=0
+   ³  ³  ÀÄ*
+   ³  ÃÄdisplay_center  0/1274  Ram=172
+   ³  ³  ÃÄLCD_PutCmd  0/30  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGR_1002  0/36  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄlcd_printf  0/176  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄLCD_PutCmd  0/30  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@goto26520  0/46  Ram=0
+   ³  ³  ÃÄ@goto26481  0/48  Ram=0
+   ³  ³  ÃÄdisplay  0/600  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄdisplay  0/600  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄdisplay  0/600  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄdisplay  0/600  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄdisplay  0/600  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄdisplay  0/600  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄLCD_PutCmd  0/30  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄlcd_printf  0/176  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄLCD_PutCmd  0/30  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGCN_1002  0/40  Ram=3
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PRINTF_U_1002  0/124  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄLCD_PutChar  0/16  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄlcd_printf  0/176  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄLCD_PutCmd  0/30  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGCN_1002  0/40  Ram=3
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PRINTF_U_1002  0/124  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄLCD_PutChar  0/16  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄlcd_printf  0/176  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄLCD_PutCmd  0/30  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGCN_1002  0/40  Ram=3
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PRINTF_U_1002  0/124  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄLCD_PutChar  0/16  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄlcd_printf  0/176  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄLCD_PutCmd  0/30  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGCN_1002  0/40  Ram=3
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PRINTF_U_1002  0/124  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄLCD_PutChar  0/16  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄlcd_printf  0/176  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄLCD_PutCmd  0/30  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGCN_1002  0/40  Ram=3
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PRINTF_U_1002  0/124  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄLCD_PutChar  0/16  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄlcd_printf  0/176  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄLCD_PutCmd  0/30  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PSTRINGCN_1002  0/40  Ram=3
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PRINTF_U_1002  0/124  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄLCD_PutChar  0/16  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄlcd_printf  0/176  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄlcd_printf  0/176  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄLCD_PutCmd  0/30  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄlcd_printf  0/176  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄlcd_printf  0/176  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄLCD_PutCmd  0/30  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÀÄlcd_printf  0/176  Ram=1
+   ³  ³     ÀÄ*
+   ³  ÀÄdisable_reset  0/88  Ram=0
+   ³     ÀÄ*
+   ÀÄinterrupt_timer0  0/308  Ram=0
+      ÀÄ@goto26963  0/38  Ram=0
