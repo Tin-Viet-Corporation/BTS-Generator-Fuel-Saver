@@ -144,76 +144,76 @@ ROM Allocation:
 0000AE  @const1089.call
 0000C0  @const1090.call
 0000D0  @const1095.call
-0000DC  @const1104.call
-0000EE  @const1105.call
-0000F8  @const1106.call
-000108  @const1107.call
-000114  @const1108.call
-000120  @const1109.call
-00012C  @const1110.call
-00013C  @const1111.call
-000144  @const1112.call
-00014C  @const1113.call
-000156  @const1114.call
-000160  @const1115.call
-000168  @const1122.call
-000176  @const1123.call
-000182  @const1124.call
-000190  @const1125.call
-00019E  @const1126.call
-0001AC  @const1127.call
-0001B8  @const1129.call
-0001CA  @const1130.call
-0001D8  @const1131.call
-0001E2  @const1132.call
-0001E6  @const1133.call
-0001EA  @const1134.call
-0001EE  @const1135.call
-0001F2  @const1136.call
-0001F6  @const1137.call
-0001FA  interrupt_timer0
-00032E  @goto22454
-000354  @delay_ms1
-00037E  disable_reset
-0003D6  LCD_SetData
-00040C  LCD_PulseEnable
-00042A  LCD_PutCmd
-000448  LCD_Init
-0004A4  read_data
-000542  init_data
-0005E2  check_AC
-000628  reset_timer_data
-00065C  LCD_PutChar
-00066C  @PSTRINGC_1002
-00068C  @PSTRINGR_1002
-0006B0  lcd_printf
-000760  @goto22096
-000786  @PSTRINGCN_1002
-0007AE  @DIV88
-0007DA  @PRINTF_U_1002
-000856  display
-000AAE  @goto21977
-000AD8  check_mn
-000B0A  key_scan
-000C38  strlen
-000C6C  strcmp
-000CE2  process_menu
-000D60  default_data
-000D7C  write_data
-000E7C  process_up
-000F3A  @goto22273
-000F66  process_down
-001014  @goto22319
-001040  process_exit
-0010A0  display_center
-00159A  @goto22009
-0015CA  @goto22044
-0015F8  MAIN
-0015F8  @cinit1
-001694  @cinit2
-0018E4  @goto21784
-001914  @goto21796
-001942  @goto21816
+0000E0  @const1104.call
+0000F2  @const1105.call
+0000FC  @const1106.call
+00010C  @const1107.call
+000118  @const1108.call
+000124  @const1109.call
+000130  @const1110.call
+000140  @const1111.call
+000148  @const1112.call
+000150  @const1113.call
+00015A  @const1114.call
+000164  @const1115.call
+00016C  @const1122.call
+00017A  @const1123.call
+000186  @const1124.call
+000194  @const1125.call
+0001A2  @const1126.call
+0001B0  @const1127.call
+0001BC  @const1129.call
+0001CE  @const1130.call
+0001DC  @const1131.call
+0001E6  @const1132.call
+0001EA  @const1133.call
+0001EE  @const1134.call
+0001F2  @const1135.call
+0001F6  @const1136.call
+0001FA  @const1137.call
+0001FE  interrupt_timer0
+000332  @goto61538
+000358  @delay_ms1
+000382  disable_reset
+0003DA  LCD_SetData
+000410  LCD_PulseEnable
+00042E  LCD_PutCmd
+00044C  LCD_Init
+0004A8  read_data
+000546  init_data
+0005E6  check_AC
+00062C  reset_timer_data
+000660  LCD_PutChar
+000670  @PSTRINGC_1002
+000690  @PSTRINGR_1002
+0006B4  lcd_printf
+000764  @goto61179
+00078A  @PSTRINGCN_1002
+0007B2  @DIV88
+0007DE  @PRINTF_U_1002
+00085A  display
+000AB2  @goto61065
+000ADC  check_mn
+000B0E  key_scan
+000C3C  strlen
+000C70  strcmp
+000CE6  process_menu
+000D64  default_data
+000D80  write_data
+000E80  process_up
+000F3E  @goto61355
+000F6A  process_down
+001018  @goto61399
+001044  process_exit
+0010A4  display_center
+00159E  @goto61101
+0015CE  @goto61133
+0015FC  MAIN
+0015FC  @cinit1
+001698  @cinit2
+0018E8  @goto60872
+001918  @goto60884
+001946  @goto60902
 0135  StrtoulGO
 0135  StrtolGO
 
@@ -221,7 +221,7 @@ Project Directory:
     D:\Tin Viet Telecom Corp\BTS-Generator-Fuel-Saver\src\
 
 Project Files:
-    main.c                                                  [20-Thg2-23 20:30  CRC=4E039D5C]
+    main.c                                                  [20-Thg2-23 21:32  CRC=4A8D61F1]
     C:\Program Files (x86)\PICC\Devices\18f26k20.h          [06-Thg5-22 15:56  CRC=A6A4C6B5]
     C:\Program Files (x86)\PICC\Drivers\stdlib.h            [30-Thg6-20 14:21  CRC=452E14BB]
     C:\Program Files (x86)\PICC\drivers\stddef.h            [30-Thg1-19 12:26  CRC=897CEC6C]
@@ -230,9 +230,9 @@ Project Files:
     lcd_lib_4bit.c                                          [20-Thg2-23 20:55  CRC=5AD94379]
     C:\Program Files (x86)\PICC\Drivers\stddef.h            [30-Thg1-19 12:26  CRC=897CEC6C]
 
-Source signature=0FA5D94F
+Source signature=0C2F9DE4
 Program memory checksum=0000
-Hex file CRC=7D91
+Hex file CRC=78C7
 
 Units:
     D:\Tin Viet Telecom Corp\BTS-Generator-Fuel-Saver\src\main (main)
