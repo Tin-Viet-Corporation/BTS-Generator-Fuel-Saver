@@ -551,7 +551,7 @@ void display_center(void)
 
    case 2:                // TG TRI HOAN MPD
       LCD_PUTCMD(Line_2); // Dua hien thi chu dau dong hang` duoi
-      PRINTF(LCD_PUTCHAR, "PHUT: <%01u>", timer_tri_hoan);
+      PRINTF(LCD_PUTCHAR, "PHUT Long: <%01u>", timer_tri_hoan);
       clear_lcd();
       break;
 
