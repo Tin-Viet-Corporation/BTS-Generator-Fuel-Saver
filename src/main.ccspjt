@@ -9,6 +9,25 @@ FileList=main.c
 Type=4
 [mru-list]
 1=build\main.c
+
+[fileformats]
+forcecoff=0
+
+[ProjectLog]
+Days=1
+D1=21-03-2023
+D1_L=1
+D1_L1=[76372]Project Opened.
+
+[Opened Files]
+1=main.c
+t1=1
+Count=1
+[main.c]
+Type=4
+
+[defines]
+buildcount=1
 [Units]
 Count=1
 1=main (main)
