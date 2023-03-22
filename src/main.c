@@ -446,7 +446,7 @@ void display(char code_print)
       PRINTF(LCD_PUTCHAR, "KIEM TRA AC");
       clear_lcd()
           LCD_PUTCMD(Line_2);
-      PRINTF(LCD_PUTCHAR, "00:00:%01u", val_timer_ktra_AC);
+      PRINTF(LCD_PUTCHAR, "00:00:%02u", val_timer_ktra_AC);
       clear_lcd();
       break;
    case 5: // AC BINH THUONG
