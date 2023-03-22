@@ -1,19 +1,19 @@
 
-ROM used:   6504/65536 (10%)
-            6504/65536 (10%) including unused fragments
+ROM used:   6684/65536 (10%)
+            6684/65536 (10%) including unused fragments
 
             1.7 Average locations per line
-            5.6 Average locations per statement
+            5.7 Average locations per statement
 
 RAM used:   126/3936 (3%) at main() level
-            303/3936 (8%) worst case
+            305/3936 (8%) worst case
 
 Stack used: 8 worst case (7 in main + 1 for interrupts)
 Stack size: 31
 
 Lines Stmts  %   Files
 ----- ----- ---  -----
- 1089   646  55  main.c
+ 1093   647  55  main.c
   875     0   0  C:\Program Files (x86)\PICC\Devices\18f26k20.h
  1354   359  31  C:\Program Files (x86)\PICC\Drivers\stdlib.h
    32     0   0  C:\Program Files (x86)\PICC\drivers\stddef.h
@@ -22,7 +22,7 @@ Lines Stmts  %   Files
    88    32   3  lcd_lib_4bit.c
    32     0   0  C:\Program Files (x86)\PICC\Drivers\stddef.h
 ----- -----
- 3933  1166 Total
+ 3937  1167 Total
 
 Page ROM  %  RAM    Vol Diff  Functions:
 ---- --- --- ---    --- ----  ----------
@@ -33,46 +33,43 @@ Page ROM  %  RAM    Vol Diff  Functions:
 0     16   0    1     65  1.2  LCD_PutChar
 0     30   0    1     90  1.4  LCD_PutCmd
 0     30   0    0     72  1.2  LCD_PulseEnable
-0     54   0    1    225  0.8  LCD_SetData
-0    744   6    2   4111  9.9  MAIN
-0     48   0    0             @goto2545
-0     46   0    0             @goto2557
-0     34   0    0             @goto2577
+0     54   0    1    228  0.7  LCD_SetData
+0    760   6    2   4264 10.0  MAIN
+0     48   0    0             @goto58066
+0     46   0    0             @goto58078
+0     34   0    0             @goto58097
 0    160   1    4   1134  2.9  init_data
 0     18   0    0             @const1090
 0     50   0    0    233  3.6  check_mn
 0     70   1    0    439  4.7  check_AC
-0    624   5    1   2080  4.9  display
+0    822   6    3   2302  5.9  display
 0     16   0    0             @const1091
 0     32   0    2             @PSTRINGC_1002
-0     14   0    0             @const1096
-0     40   0    3             @PSTRINGCN_1002
 0     44   0    3             @DIV88
 0    124   1    2             @PRINTF_U_1002
-0     18   0    0             @const1105
-0     10   0    0             @const1106
-0     16   0    0             @const1107
-0     12   0    0             @const1108
-0     12   0    0             @const1109
-0     12   0    0             @const1110
+0     18   0    0             @const1103
+0     16   0    0             @const1105
+0     12   0    0             @const1107
+0     14   0    0             @const1108
+0     40   0    3             @PSTRINGCN_1002
 0     16   0    0             @const1111
 0      8   0    0             @const1112
 0      8   0    0             @const1113
 0     10   0    0             @const1114
 0     10   0    0             @const1115
 0      8   0    0             @const1116
-0     42   0    0             @goto2739
+0     42   0    0             @goto58257
 0     28   0    0    113  1.9  default_data
 0   1274  10  172   2377  5.4  display_center
 0     36   0    2             @PSTRINGR_1002
-0     48   0    0             @goto2775
+0     48   0    0             @goto58293
 0     14   0    0             @const1123
 0     12   0    0             @const1124
 0     14   0    0             @const1125
 0     14   0    0             @const1126
 0     14   0    0             @const1127
 0     12   0    0             @const1128
-0     46   0    0             @goto2809
+0     46   0    0             @goto58323
 0     46   0    0    280  2.3  reset_timer_data
 0    176   1    1    840  5.7  lcd_printf
 0     18   0    0             @const1130
@@ -84,29 +81,29 @@ Page ROM  %  RAM    Vol Diff  Functions:
 0      4   0    0             @const1136
 0      4   0    0             @const1137
 0      4   0    0             @const1138
-0     38   0    0             @goto2861
+0     38   0    0             @goto58373
 0    302   2    3   1236  5.3  key_scan
 0    126   1    2    498  8.0  process_menu
 0    190   1    3   1039  6.3  process_up
-0     44   0    0             @goto3041
+0     44   0    0             @goto58549
 0    174   1    3    981  7.2  process_down
-0     44   0    0             @goto3088
+0     44   0    0             @goto58595
 0     96   1    3    428  7.0  process_exit
 0    256   2    0    402  2.4  write_data
 0    158   1    1    402  2.4  read_data
 0     88   1    0    275  1.4  disable_reset
 0    300   2    0   2219  8.3  interrupt_timer0
-0     38   0    0             @goto3227
+0     38   0    0             @goto58727
  Inline         0             @cinit1
 
 Program metrics:
     Functions               25
-    Statements              1166
+    Statements              1167
     Comments                1102
-    Volume (V)              33073
-    Difficulty (D)          102.3
-    Effort to implement (E) 3382945
-    Time to implement (T)   52 hours, 12 minutes
+    Volume (V)              33575
+    Difficulty (D)          103.3
+    Effort to implement (E) 3467643
+    Time to implement (T)   53 hours, 31 minutes
     Est Delivered Bugs (B)  8
     Cyclomatic Complexity   176
     Maintainability (MI)    32
@@ -116,7 +113,7 @@ Program metrics:
 00000-00002     4  0  
 00004-00006     0  4  
 00008-000AC   166  0  
-000AE-0FFFE  6334  59028  
+000AE-0FFFE  6514  58848  
 
 
 

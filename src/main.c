@@ -47,6 +47,10 @@
 #define chay_mpd 6
 #define error 7
 
+#define minute_to_hour(time) time / 60
+#define minute_to_minute(time) time % 60
+#define sec_to_sec(time) time % 60
+#define sec_to_minute(time) time / 60
 //===================
 #define clear_lcd() lcd_printf(0);
 #define yesno() lcd_printf(9);
@@ -422,7 +426,7 @@ void display(char code_print)
       PRINTF(LCD_PUTCHAR, "TG TRI HOAN MPD");
       clear_lcd();
       LCD_PUTCMD(Line_2);
-      PRINTF(LCD_PUTCHAR, "00:%02u:%02u", val_timer_tri_hoan, flag_timer_tri_hoan_60s);
+      PRINTF(LCD_PUTCHAR, "%02u:%02u:%02u", minute_to_hour(val_timer_tri_hoan), minute_to_minute(val_timer_tri_hoan), flag_timer_tri_hoan_60s);
       clear_lcd();
       break;
    case 2: // delay 2
@@ -438,15 +442,15 @@ void display(char code_print)
       PRINTF(LCD_PUTCHAR, "TG TAM DUNG MPD");
       clear_lcd();
       LCD_PUTCMD(Line_2);
-      PRINTF(LCD_PUTCHAR, "00:%02u:%02u", val_timer_tam_dung, flag_timer_tam_dung_60s);
+      PRINTF(LCD_PUTCHAR, "%02u:%02u:%02u", minute_to_hour(val_timer_tam_dung), minute_to_minute(val_timer_tam_dung), flag_timer_tam_dung_60s);
       clear_lcd();
       break;
    case 4: // Do AC
       LCD_PUTCMD(Line_1);
       PRINTF(LCD_PUTCHAR, "KIEM TRA AC");
-      clear_lcd()
-          LCD_PUTCMD(Line_2);
-      PRINTF(LCD_PUTCHAR, "00:00:%02u", val_timer_ktra_AC);
+      clear_lcd();
+      LCD_PUTCMD(Line_2);
+      PRINTF(LCD_PUTCHAR, "00:%02u:%02u", sec_to_minute(val_timer_ktra_AC), sec_to_sec(val_timer_ktra_AC));
       clear_lcd();
       break;
    case 5: // AC BINH THUONG

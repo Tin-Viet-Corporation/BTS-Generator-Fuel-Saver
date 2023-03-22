@@ -1,5 +1,5 @@
 ÀÄmain
-   ÃÄMAIN  0/744  Ram=2
+   ÃÄMAIN  0/760  Ram=2
    ³  ÃÄ@cinit1  (Inline)  Ram=0
    ³  ÃÄ@cinit2  (Inline)  Ram=0
    ³  ÃÄdisable_reset  0/88  Ram=0
@@ -40,12 +40,12 @@
    ³  ³  ÀÄ@const1090  0/18  Ram=0
    ³  ÃÄdisable_reset  0/88  Ram=0
    ³  ³  ÀÄ*
-   ³  ÃÄ@goto2557  0/46  Ram=0
+   ³  ÃÄ@goto58078  0/46  Ram=0
    ³  ÃÄcheck_AC  0/70  Ram=0
-   ³  ÃÄ@goto2545  0/48  Ram=0
+   ³  ÃÄ@goto58066  0/48  Ram=0
    ³  ÃÄreset_timer_data  0/46  Ram=0
-   ³  ÃÄdisplay  0/624  Ram=1
-   ³  ³  ÃÄ@goto2739  0/42  Ram=0
+   ³  ÃÄdisplay  0/822  Ram=3
+   ³  ³  ÃÄ@goto58257  0/42  Ram=0
    ³  ³  ÃÄLCD_PutCmd  0/30  Ram=1
    ³  ³  ³  ÀÄ*
    ³  ³  ÃÄ@PSTRINGC_1002  0/32  Ram=2
@@ -59,7 +59,7 @@
    ³  ³  ³  ³  ÀÄ*
    ³  ³  ³  ÃÄ@PSTRINGC_1002  0/32  Ram=2
    ³  ³  ³  ³  ÀÄ*
-   ³  ³  ³  ÃÄ@goto2861  0/38  Ram=0
+   ³  ³  ³  ÃÄ@goto58373  0/38  Ram=0
    ³  ³  ³  ÃÄ@PSTRINGC_1002  0/32  Ram=2
    ³  ³  ³  ³  ÀÄ*
    ³  ³  ³  ÃÄ@PSTRINGC_1002  0/32  Ram=2
@@ -79,9 +79,8 @@
    ³  ³  ³     ÀÄ*
    ³  ³  ÃÄLCD_PutCmd  0/30  Ram=1
    ³  ³  ³  ÀÄ*
-   ³  ³  ÃÄ@PSTRINGCN_1002  0/40  Ram=3
-   ³  ³  ³  ÀÄLCD_PutChar  0/16  Ram=1
-   ³  ³  ³     ÀÄ*
+   ³  ³  ÃÄ@DIV88  0/44  Ram=3
+   ³  ³  ÃÄ@DIV88  0/44  Ram=3
    ³  ³  ÃÄ@PRINTF_U_1002  0/124  Ram=2
    ³  ³  ³  ÃÄ@DIV88  0/44  Ram=3
    ³  ³  ³  ÃÄLCD_PutChar  0/16  Ram=1
@@ -91,6 +90,10 @@
    ³  ³  ³  ³  ÀÄ*
    ³  ³  ³  ÀÄLCD_PutChar  0/16  Ram=1
    ³  ³  ³     ÀÄ*
+   ³  ³  ÃÄLCD_PutChar  0/16  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PRINTF_U_1002  0/124  Ram=2
+   ³  ³  ³  ÀÄ*
    ³  ³  ÃÄLCD_PutChar  0/16  Ram=1
    ³  ³  ³  ÀÄ*
    ³  ³  ÃÄ@PRINTF_U_1002  0/124  Ram=2
@@ -105,7 +108,13 @@
    ³  ³  ³  ÀÄ*
    ³  ³  ÃÄLCD_PutCmd  0/30  Ram=1
    ³  ³  ³  ÀÄ*
-   ³  ³  ÃÄ@PSTRINGCN_1002  0/40  Ram=3
+   ³  ³  ÃÄ@PRINTF_U_1002  0/124  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄLCD_PutChar  0/16  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PRINTF_U_1002  0/124  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄLCD_PutChar  0/16  Ram=1
    ³  ³  ³  ÀÄ*
    ³  ³  ÃÄ@PRINTF_U_1002  0/124  Ram=2
    ³  ³  ³  ÀÄ*
@@ -119,7 +128,15 @@
    ³  ³  ³  ÀÄ*
    ³  ³  ÃÄLCD_PutCmd  0/30  Ram=1
    ³  ³  ³  ÀÄ*
-   ³  ³  ÃÄ@PSTRINGCN_1002  0/40  Ram=3
+   ³  ³  ÃÄ@DIV88  0/44  Ram=3
+   ³  ³  ÃÄ@DIV88  0/44  Ram=3
+   ³  ³  ÃÄ@PRINTF_U_1002  0/124  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄLCD_PutChar  0/16  Ram=1
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@PRINTF_U_1002  0/124  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄLCD_PutChar  0/16  Ram=1
    ³  ³  ³  ÀÄ*
    ³  ³  ÃÄ@PRINTF_U_1002  0/124  Ram=2
    ³  ³  ³  ÀÄ*
@@ -133,7 +150,14 @@
    ³  ³  ³  ÀÄ*
    ³  ³  ÃÄLCD_PutCmd  0/30  Ram=1
    ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄ@DIV88  0/44  Ram=3
+   ³  ³  ÃÄ@DIV88  0/44  Ram=3
    ³  ³  ÃÄ@PSTRINGCN_1002  0/40  Ram=3
+   ³  ³  ³  ÀÄLCD_PutChar  0/16  Ram=1
+   ³  ³  ³     ÀÄ*
+   ³  ³  ÃÄ@PRINTF_U_1002  0/124  Ram=2
+   ³  ³  ³  ÀÄ*
+   ³  ³  ÃÄLCD_PutChar  0/16  Ram=1
    ³  ³  ³  ÀÄ*
    ³  ³  ÃÄ@PRINTF_U_1002  0/124  Ram=2
    ³  ³  ³  ÀÄ*
@@ -189,7 +213,7 @@
    ³  ÃÄcheck_mn  0/50  Ram=0
    ³  ÃÄreset_timer_data  0/46  Ram=0
    ³  ÃÄkey_scan  0/302  Ram=3
-   ³  ÃÄ@goto2577  0/34  Ram=0
+   ³  ÃÄ@goto58097  0/34  Ram=0
    ³  ÃÄLCD_Init  0/92  Ram=0
    ³  ³  ÀÄ*
    ³  ÃÄprocess_menu  0/126  Ram=2
@@ -198,13 +222,13 @@
    ³  ³  ÀÄstrcmp  0/118  Ram=5
    ³  ÃÄ@delay_ms1  0/42  Ram=1
    ³  ÃÄprocess_up  0/190  Ram=3
-   ³  ³  ÃÄ@goto3041  0/44  Ram=0
+   ³  ³  ÃÄ@goto58549  0/44  Ram=0
    ³  ³  ÃÄdefault_data  0/28  Ram=0
    ³  ³  ÀÄwrite_data  0/256  Ram=0
    ³  ÃÄwrite_data  0/256  Ram=0
    ³  ÃÄ@delay_ms1  0/42  Ram=1
    ³  ÃÄprocess_down  0/174  Ram=3
-   ³  ³  ÀÄ@goto3088  0/44  Ram=0
+   ³  ³  ÀÄ@goto58595  0/44  Ram=0
    ³  ÃÄwrite_data  0/256  Ram=0
    ³  ÃÄ@delay_ms1  0/42  Ram=1
    ³  ÃÄprocess_exit  0/96  Ram=3
@@ -222,19 +246,19 @@
    ³  ³  ³  ÀÄ*
    ³  ³  ÃÄLCD_PutCmd  0/30  Ram=1
    ³  ³  ³  ÀÄ*
-   ³  ³  ÃÄ@goto2809  0/46  Ram=0
-   ³  ³  ÃÄ@goto2775  0/48  Ram=0
-   ³  ³  ÃÄdisplay  0/624  Ram=1
+   ³  ³  ÃÄ@goto58323  0/46  Ram=0
+   ³  ³  ÃÄ@goto58293  0/48  Ram=0
+   ³  ³  ÃÄdisplay  0/822  Ram=3
    ³  ³  ³  ÀÄ*
-   ³  ³  ÃÄdisplay  0/624  Ram=1
+   ³  ³  ÃÄdisplay  0/822  Ram=3
    ³  ³  ³  ÀÄ*
-   ³  ³  ÃÄdisplay  0/624  Ram=1
+   ³  ³  ÃÄdisplay  0/822  Ram=3
    ³  ³  ³  ÀÄ*
-   ³  ³  ÃÄdisplay  0/624  Ram=1
+   ³  ³  ÃÄdisplay  0/822  Ram=3
    ³  ³  ³  ÀÄ*
-   ³  ³  ÃÄdisplay  0/624  Ram=1
+   ³  ³  ÃÄdisplay  0/822  Ram=3
    ³  ³  ³  ÀÄ*
-   ³  ³  ÃÄdisplay  0/624  Ram=1
+   ³  ³  ÃÄdisplay  0/822  Ram=3
    ³  ³  ³  ÀÄ*
    ³  ³  ÃÄLCD_PutCmd  0/30  Ram=1
    ³  ³  ³  ÀÄ*
@@ -315,4 +339,4 @@
    ³  ÀÄdisable_reset  0/88  Ram=0
    ³     ÀÄ*
    ÀÄinterrupt_timer0  0/300  Ram=0
-      ÀÄ@goto3227  0/38  Ram=0
+      ÀÄ@goto58727  0/38  Ram=0
