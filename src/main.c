@@ -164,7 +164,7 @@ void main()
             break;
          case 2: // mat AC: DELAY 1
             output_high(out_delay);
-            if (val_timer_tri_hoan <= 0)
+            if (val_timer_tri_hoan < 0)
             {
                state_AC = 3;
             }
