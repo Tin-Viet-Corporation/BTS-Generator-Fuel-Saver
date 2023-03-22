@@ -218,7 +218,7 @@ void main()
                break;
             }
             // OFF REMOTE START
-            if (val_timer_chay_lien_tuc <= 0)
+            if (val_timer_chay_lien_tuc <= 0 && flag_timer_chay_lien_tuc_60p <= 0 && flag_timer_chay_lien_tuc_60s <= 0)
             {
                output_low(out_fire);
                flag_error = 0;
@@ -228,7 +228,7 @@ void main()
             }
             break;
          case 5: // DELAY 3
-            if (val_timer_tam_dung <= 0)
+            if (val_timer_tam_dung <= 0 && flag_timer_tam_dung_60s <= 0)
             {
                state_AC = 3;
                reset_timer_data();
@@ -430,7 +430,7 @@ void display(char code_print)
       PRINTF(LCD_PUTCHAR, "TG CHAY LIEN TUC");
       clear_lcd();
       LCD_PUTCMD(Line_2);
-      PRINTF(LCD_PUTCHAR, "GIO: %01u", val_timer_chay_lien_tuc);
+      PRINTF(LCD_PUTCHAR, "%02u:%02u:%02u", val_timer_chay_lien_tuc, flag_timer_chay_lien_tuc_60p, flag_timer_chay_lien_tuc_60s);
       clear_lcd();
       break;
    case 3: // delay 3
@@ -438,7 +438,7 @@ void display(char code_print)
       PRINTF(LCD_PUTCHAR, "TG TAM DUNG MPD");
       clear_lcd();
       LCD_PUTCMD(Line_2);
-      PRINTF(LCD_PUTCHAR, "PHUT: %01u", val_timer_tam_dung);
+      PRINTF(LCD_PUTCHAR, "00:%02u:%02u", val_timer_tam_dung, flag_timer_tam_dung_60s);
       clear_lcd();
       break;
    case 4: // Do AC
@@ -446,7 +446,7 @@ void display(char code_print)
       PRINTF(LCD_PUTCHAR, "KIEM TRA AC");
       clear_lcd()
           LCD_PUTCMD(Line_2);
-      PRINTF(LCD_PUTCHAR, "GIAY: %01u", val_timer_ktra_AC);
+      PRINTF(LCD_PUTCHAR, "00:00:%01u", val_timer_ktra_AC);
       clear_lcd();
       break;
    case 5: // AC BINH THUONG
