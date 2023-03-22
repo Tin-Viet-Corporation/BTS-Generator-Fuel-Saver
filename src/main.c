@@ -97,8 +97,9 @@ char val_loading = 0;
 char flag_error = 0; // LONG FLAG = 0 la ko loi, = 1 la LOI
 char flag_mn = 0;    // LONG FLAG = 0 la chay xong check_mn(), = 1 la dang chay
 
-unsigned long counter_timer0 = 0, flag_timer_chay_lien_tuc_3600s = 3600;
+unsigned long counter_timer0 = 0;
 char flag_timer_tri_hoan_60s = 60, flag_timer_60s_password = 0, flag_timer_tam_dung_60s = 60;
+char flag_timer_chay_lien_tuc_60s = 60, flag_timer_chay_lien_tuc_60p = 60;
 
 char pwm_lcd = 0;
 char sum_out = 0, sum_out_old = 0, loop_not_display = 0;
@@ -360,7 +361,7 @@ void init_data(void)
    val_loading = 0;
 
    counter_timer0 = 0, flag_timer_60s_password = 0;
-   flag_timer_tri_hoan_60s = 0, flag_timer_chay_lien_tuc_3600s = 0, flag_timer_tam_dung_60s = 0;
+   flag_timer_tri_hoan_60s = 0, flag_timer_chay_lien_tuc_60s = 0, flag_timer_chay_lien_tuc_60p = 0, flag_timer_tam_dung_60s = 0;
 
    pwm_lcd = 0;
    sum_out = 0, sum_out_old = 0, loop_not_display = 0;
@@ -421,7 +422,7 @@ void display(char code_print)
       PRINTF(LCD_PUTCHAR, "TG TRI HOAN MPD");
       clear_lcd();
       LCD_PUTCMD(Line_2);
-      PRINTF(LCD_PUTCHAR, "PHUT: %01u", val_timer_tri_hoan);
+      PRINTF(LCD_PUTCHAR, "00:%02u:%02u", val_timer_tri_hoan, flag_timer_tri_hoan_60s);
       clear_lcd();
       break;
    case 2: // delay 2
@@ -607,7 +608,7 @@ void reset_timer_data(void)
    val_timer_off_mpd = timer_off_mpd;
    val_timer_ktra_mn = timer_ktra_mn;
    state_mn = 0;
-   flag_timer_tri_hoan_60s = 60, flag_timer_chay_lien_tuc_3600s = 3600, flag_timer_tam_dung_60s = 60;
+   flag_timer_tri_hoan_60s = 60, flag_timer_chay_lien_tuc_60s = 60, flag_timer_chay_lien_tuc_60p = 60, flag_timer_tam_dung_60s = 60;
 }
 
 void lcd_printf(char code_printf)
@@ -1038,11 +1039,15 @@ void interrupt_timer0()
             }
             break;
          case 4:
-            if (--flag_timer_chay_lien_tuc_3600s > 3599)
+            if (--flag_timer_chay_lien_tuc_60s > 59)
             {
-               flag_timer_chay_lien_tuc_3600s = 3599;
-               if (val_timer_chay_lien_tuc > 0)
-                  val_timer_chay_lien_tuc--;
+               flag_timer_chay_lien_tuc_60s = 59;
+               if (--flag_timer_chay_lien_tuc_60p > 59)
+               {
+                  flag_timer_chay_lien_tuc_60p = 59;
+                  if (val_timer_chay_lien_tuc > 0)
+                     val_timer_chay_lien_tuc--;
+               }
             }
             break;
          case 5:
