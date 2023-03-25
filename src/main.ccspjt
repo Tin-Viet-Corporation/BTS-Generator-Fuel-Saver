@@ -1,5 +1,5 @@
 [PROJECT]
-Target=build\main.hex
+Target=main.hex
 Processor_Text=PIC18F26K20
 CCSVersion=5.109
 Compiler=PCH
@@ -8,7 +8,7 @@ FileList=main.c
 [build\main.c]
 Type=4
 [mru-list]
-1=build\main.c
+1=main.c
 
 [fileformats]
 forcecoff=0
@@ -31,7 +31,7 @@ Count=1
 Type=4
 
 [defines]
-buildcount=1
+buildcount=2
 [Units]
 Count=1
 1=main (main)

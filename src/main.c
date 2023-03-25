@@ -615,7 +615,7 @@ void reset_timer_data(void)
    val_timer_off_mpd = timer_off_mpd;
    val_timer_ktra_mn = timer_ktra_mn;
    state_mn = 0;
-   flag_timer_tri_hoan_60s = 60, flag_timer_chay_lien_tuc_60s = 60, flag_timer_chay_lien_tuc_60p = 60, flag_timer_tam_dung_60s = 60;
+   flag_timer_tri_hoan_60s = 0, flag_timer_chay_lien_tuc_60s = 0, flag_timer_chay_lien_tuc_60p = 0, flag_timer_tam_dung_60s = 0;
 }
 
 void lcd_printf(char code_printf)

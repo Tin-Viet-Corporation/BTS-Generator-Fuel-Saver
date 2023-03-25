@@ -1,5 +1,5 @@
-Compiling D:\Tin Viet Telecom Corp\BTS-Generator-Fuel-Saver\src\main on 24-Thg3-23 at 20:29
+Compiling D:\Tin Viet Telecom Corp\BTS-Generator-Fuel-Saver\src\main on 24-Thg3-23 at 20:32
 >>> Warning 203 "D:\Tin Viet Telecom Corp\BTS-Generator-Fuel-Saver\src\main.c" Line 150(1,1): Condition always TRUE
-*** Error 76 "D:\Tin Viet Telecom Corp\BTS-Generator-Fuel-Saver\src\main.c" Line 246(13,23): Expect ;
-      1 Errors,  1 Warnings.
-Build Failed.
+      Memory usage:   ROM=10%      RAM=3% - 8%
+      0 Errors,  1 Warnings.
+Build Successful.
