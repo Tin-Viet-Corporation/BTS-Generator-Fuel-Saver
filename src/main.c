@@ -66,6 +66,7 @@
 #define timer_tam_dung_ee timer_chay_lien_tuc_ee + 1
 #define timer_ktra_AC_ee timer_tam_dung_ee + 1
 #define timer_ktra_mn_ee timer_ktra_AC_ee + 1
+#define flag_error_ee timer_ktra_mn_ee + 1
 
 #define size_pass 5
 
@@ -226,6 +227,7 @@ void main()
             {
                output_low(out_fire);
                flag_error = 0;
+               write_data(); // Cap nhat flag_error = 0
                output_low(out_temp);
                output_low(out_error);
                state_AC = 5;
@@ -240,6 +242,7 @@ void main()
             break;
          case 10: // error
             flag_error = 1;
+            write_data() // Luu flag_error = 1
             output_low(out_fire);
             output_high(out_temp);
             output_high(out_error);
@@ -356,7 +359,6 @@ void init_data(void)
    val_timer_chay_lien_tuc = timer_chay_lien_tuc, timer_chay_lien_tuc_md = 3;                                  // LONG DELAY 2
    val_timer_tam_dung = timer_tam_dung, timer_tam_dung_md = 60;                                                // LONG DELAY 3
    val_timer_ktra_AC = timer_ktra_AC, timer_ktra_AC_md = 60;                                                   // LONG KT AC TIMER
-   flag_error = 0;                                                                                             // LONG FLAG = 0 la ko loi, = 1 la LOI
    flag_mn = 0;
    val_timer_ktra_mn = timer_ktra_mn, timer_ktra_mn_md = 30; // LONG KT MN TIMER
    val_timer_on_mpd = 20, timer_on_mpd = 20;
@@ -396,7 +398,7 @@ void check_AC(void)
       {
          if (!(status_AC()))
          {
-            state_AC = 2;
+            state_AC = flag_error == 0 ? 2 : 3;
          }
          val_timer_ktra_AC = timer_ktra_AC;
       }
@@ -498,6 +500,7 @@ void default_data(void)
    timer_tam_dung = timer_tam_dung_md;           // LONG DELAY 3
    timer_ktra_AC = timer_ktra_AC_md;             // LONG KT AC TIMER
    timer_ktra_mn = timer_ktra_mn_md;             // LONG KT MN TIMER
+   flag_error = 0;                               // LONG FLAG = 0 la ko loi, = 1 la LOI
 }
 void display_center(void)
 {
@@ -933,6 +936,7 @@ void write_data(void)
    wee(timer_ktra_mn_ee, timer_ktra_mn);
    wee(timer_ktra_AC_ee, timer_ktra_AC);
    wee(counter_restart_mpd_ee, counter_restart_mpd);
+   wee(flag_error_ee, flag_error);
 }
 
 //=========================
@@ -944,6 +948,7 @@ void read_data(void)
    timer_ktra_mn = ree(timer_ktra_mn_ee);
    timer_ktra_AC = ree(timer_ktra_AC_ee);
    counter_restart_mpd = ree(counter_restart_mpd_ee);
+   flag_error = ree(flag_error_ee);
 }
 
 void disable_reset(void)
