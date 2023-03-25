@@ -242,7 +242,7 @@ void main()
             break;
          case 10: // error
             flag_error = 1;
-            write_data() // Luu flag_error = 1
+            write_data(); // Luu flag_error = 1
             output_low(out_fire);
             output_high(out_temp);
             output_high(out_error);
