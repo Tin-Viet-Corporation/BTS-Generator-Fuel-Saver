@@ -974,7 +974,7 @@ void interrupt_timer0()
    clear_interrupt(INT_TIMER0);
    set_timer0(62536); // 500us => 65536 - (0.0005/(4/24000000))
 
-   if (mode == 0 && state_AC == 1) // DIMMER LCD
+   if (mode == 0) // DIMMER LCD
    {
       switch (pwm_lcd)
       {
