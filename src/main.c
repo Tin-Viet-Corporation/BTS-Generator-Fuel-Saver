@@ -97,6 +97,8 @@ char val_timer_ktra_mn = 30, timer_ktra_mn = 30, timer_ktra_mn_md = 30;         
 char val_timer_on_mpd = 20, timer_on_mpd = 20;
 char val_timer_off_mpd = 20, timer_off_mpd = 20;
 
+char val_timer_AC = 0 // LONG TIMER CO AC
+
 char val_loading = 0;
 
 char flag_error = 0; // LONG FLAG = 0 la ko loi, = 1 la LOI
@@ -105,6 +107,7 @@ char flag_mn = 0;    // LONG FLAG = 0 la chay xong check_mn(), = 1 la dang chay
 unsigned long counter_timer0 = 0;
 char flag_timer_tri_hoan_60s = 60, flag_timer_60s_password = 0, flag_timer_tam_dung_60s = 60;
 char flag_timer_chay_lien_tuc_60s = 60, flag_timer_chay_lien_tuc_60p = 60;
+char flag_timer_AC_60s = 60, flag_timer_AC_60p = 60;
 
 char pwm_lcd = 0;
 char sum_out = 0, sum_out_old = 0, loop_not_display = 0;
@@ -364,11 +367,13 @@ void init_data(void)
    val_timer_on_mpd = 20, timer_on_mpd = 20;
    val_timer_off_mpd = 20, timer_off_mpd = 20;
 
+   val_timer_AC = 0; // LONG TIMER CO AC
+
    val_loading = 0;
 
    counter_timer0 = 0, flag_timer_60s_password = 0;
    flag_timer_tri_hoan_60s = 0, flag_timer_chay_lien_tuc_60s = 0, flag_timer_chay_lien_tuc_60p = 0, flag_timer_tam_dung_60s = 0;
-
+   flag_timer_AC_60s = 0, flag_timer_AC_60p = 0;
    pwm_lcd = 0;
    sum_out = 0, sum_out_old = 0, loop_not_display = 0;
 }
@@ -398,7 +403,7 @@ void check_AC(void)
       {
          if (!(status_AC()))
          {
-            state_AC = flag_error == 0 ? 2 : 3;
+            state_AC = val_timer_AC < timer_chay_lien_tuc ? 3 : 2;
          }
          val_timer_ktra_AC = timer_ktra_AC;
       }
@@ -411,6 +416,7 @@ void check_AC(void)
          if (status_AC())
          {
             state_AC = 1;
+            val_timer_AC = 0;
          }
          val_timer_ktra_AC = timer_ktra_AC;
       }
@@ -1018,7 +1024,17 @@ void interrupt_timer0()
             if (val_timer_ktra_AC > 0)
                val_timer_ktra_AC--;
             break;
-         case 1:
+         case 1: // TIMER CO AC
+            if (--flag_timer_AC_60s > 59)
+            {
+               flag_timer_AC_60s = 59;
+               if (--flag_timer_AC_60p > 59)
+               {
+                  flag_timer_AC_60p = 59;
+                  if (val_timer_AC < timer_chay_lien_tuc)
+                     val_timer_AC++;
+               }
+            }
             break;
          case 2: // TIMER TRI HOAN
             if (--flag_timer_tri_hoan_60s > 59)
