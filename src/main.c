@@ -97,7 +97,7 @@ char val_timer_ktra_mn = 30, timer_ktra_mn = 30, timer_ktra_mn_md = 30;         
 char val_timer_on_mpd = 20, timer_on_mpd = 20;
 char val_timer_off_mpd = 20, timer_off_mpd = 20;
 
-char val_timer_AC = 0 // LONG TIMER CO AC
+char val_timer_AC = 0; // LONG TIMER CO AC
 
 char val_loading = 0;
 
