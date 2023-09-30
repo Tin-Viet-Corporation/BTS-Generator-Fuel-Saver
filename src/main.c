@@ -417,6 +417,8 @@ void check_AC(void)
          {
             state_AC = 1;
             val_timer_AC = 0;
+            flag_timer_AC_60p = 0;
+            flag_timer_AC_60s = 0;
          }
          val_timer_ktra_AC = timer_ktra_AC;
       }
@@ -463,7 +465,8 @@ void display(char code_print)
       break;
    case 5: // AC BINH THUONG
       LCD_PUTCMD(Line_1);
-      PRINTF(LCD_PUTCHAR, "D.AP AC BTHUONG");
+      // PRINTF(LCD_PUTCHAR, "D.AP AC BTHUONG");
+      PRINTF(LCD_PUTCHAR, "AC:%02u:%02u:%02u", val_timer_AC, flag_timer_AC_60p, flag_timer_AC_60s);
       clear_lcd();
       if (flag_error)
       {
