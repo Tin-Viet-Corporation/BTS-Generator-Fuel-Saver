@@ -1028,12 +1028,12 @@ void interrupt_timer0()
                val_timer_ktra_AC--;
             break;
          case 1: // TIMER CO AC
-            if (--flag_timer_AC_60s > 59)
+            if (++flag_timer_AC_60s > 59)
             {
-               flag_timer_AC_60s = 59;
-               if (--flag_timer_AC_60p > 59)
+               flag_timer_AC_60s = 0;
+               if (++flag_timer_AC_60p > 59)
                {
-                  flag_timer_AC_60p = 59;
+                  flag_timer_AC_60p = 0;
                   if (val_timer_AC < timer_chay_lien_tuc)
                      val_timer_AC++;
                }
