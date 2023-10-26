@@ -1,4 +1,6 @@
 #include "main.h"
+#define ree16(x) read_eeprom16(x);
+#define wee16(x, y) write_eeprom16(x, y);
 
 // khai bao bien
 unsigned char val_number_defaul[11] = {"0123456789"};

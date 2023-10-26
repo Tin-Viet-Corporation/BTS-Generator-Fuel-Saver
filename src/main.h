@@ -36,9 +36,7 @@
 #define out_ac PIN_B7
 
 #define ree(x) read_eeprom(x);
-#define ree16(x) read_eeprom16(x);
 #define wee(x, y) write_eeprom(x, y);
-#define wee16(x, y) write_eeprom16(x, y);
 
 #define phong_accu 1
 #define tg_chay_lien_tuc 2
