@@ -1,74 +1,4 @@
-#include "C:\Program Files (x86)\PICC\Devices\18f26k20.h"
-#device adc = 10
-#fuses hs, nolvp, protect, MCLR, NOPUT, BORV27
-#include "C:\Program Files (x86)\PICC\Drivers\stdlib.h"
-#fuses WDT16384
-#use delay(clock = 24000000)
-#include "lcd_lib_4bit.c"
-
-//============================
-#define sw_mode PIN_A3
-#define sw_up PIN_A2
-#define sw_down PIN_A1
-#define sw_exit PIN_A0
-
-#define val_mode() !input(sw_mode)
-#define val_up() !input(sw_up)
-#define val_down() !input(sw_down)
-#define val_exit() !input(sw_exit)
-
-#define clock_reset PIN_A3 // TAO XUNG CHONG TREO
-
-#define backligh_lcd PIN_A4
-#define backligh_on() output_high(backligh_lcd);
-#define backligh_off() output_low(backligh_lcd);
-
-#define cb_mn PIN_C2
-#define cb_ac PIN_C3
-
-#define status_mn() !input(cb_mn)
-#define status_ac() !input(cb_ac)
-
-#define out_fire PIN_B2
-#define out_temp PIN_B3
-#define out_error PIN_B5
-#define out_delay PIN_B4
-#define out_mn PIN_B6
-#define out_ac PIN_B7
-
-#define ree(x) read_eeprom(x);
-#define wee(x, y) write_eeprom(x, y);
-
-#define tg_tri_hoan 1
-#define tg_chay_lien_tuc 2
-#define tg_tam_dung 3
-#define do_ac 4
-#define ac_bthg 5
-#define chay_mpd 6
-#define error 7
-
-#define minute_to_hour(time) time / 60
-#define minute_to_minute(time) time % 60
-#define sec_to_sec(time) time % 60
-#define sec_to_minute(time) time / 60
-//===================
-#define clear_lcd() lcd_printf(0);
-#define yesno() lcd_printf(9);
-#define loading() lcd_printf(10);
-
-#define sch_1_s_set() lcd_printf(11);
-
-// luu tru trong rom
-
-#define timer_tri_hoan_ee 0x00
-#define counter_restart_mpd_ee timer_tri_hoan_ee + 1
-#define timer_chay_lien_tuc_ee counter_restart_mpd_ee + 1
-#define timer_tam_dung_ee timer_chay_lien_tuc_ee + 1
-#define timer_ktra_AC_ee timer_tam_dung_ee + 1
-#define timer_ktra_mn_ee timer_ktra_AC_ee + 1
-#define flag_error_ee timer_ktra_mn_ee + 1
-
-#define size_pass 5
+#include "main.h"
 
 // khai bao bien
 unsigned char val_number_defaul[11] = {"0123456789"};
@@ -87,17 +17,13 @@ short refresh_menu = 0;
 char timer_exit = 0;
 char timer_backlight = 240;
 
-char val_timer_tri_hoan = 60, timer_tri_hoan = 60, timer_tri_hoan_md = 60;             // LONG DELAY 1
 char val_counter_restart_mpd = 1, counter_restart_mpd = 4, counter_restart_mpd_md = 4; // LONG SO LAN KHOI DONG LAI MPD
 char counter_restart_mpd_current = 4;
 char val_timer_chay_lien_tuc = 3, timer_chay_lien_tuc = 3, timer_chay_lien_tuc_md = 3; // LONG DELAY 2
-char val_timer_tam_dung = 60, timer_tam_dung = 60, timer_tam_dung_md = 60;             // LONG DELAY 3
 char val_timer_ktra_AC = 60, timer_ktra_AC = 60, timer_ktra_AC_md = 60;                // LONG KT AC TIMER
 char val_timer_ktra_mn = 30, timer_ktra_mn = 30, timer_ktra_mn_md = 30;                // LONG KT MN TIMER
 char val_timer_on_mpd = 20, timer_on_mpd = 20;
 char val_timer_off_mpd = 20, timer_off_mpd = 20;
-
-char val_timer_AC = 0; // LONG TIMER CO AC
 
 char val_loading = 0;
 
@@ -105,12 +31,14 @@ char flag_error = 0; // LONG FLAG = 0 la ko loi, = 1 la LOI
 char flag_mn = 0;    // LONG FLAG = 0 la chay xong check_mn(), = 1 la dang chay
 
 unsigned long counter_timer0 = 0;
-char flag_timer_tri_hoan_60s = 60, flag_timer_60s_password = 0, flag_timer_tam_dung_60s = 60;
 char flag_timer_chay_lien_tuc_60s = 60, flag_timer_chay_lien_tuc_60p = 60;
-char flag_timer_AC_60s = 60, flag_timer_AC_60p = 60;
 
 char pwm_lcd = 0;
 char sum_out = 0, sum_out_old = 0, loop_not_display = 0;
+
+float input_dc_lv2 = 47, input_dc_lv2_md = 47;
+float delta_dc = 0.2, delta_dc_md = 0.2;
+float adc_accu = 0;
 
 //===============================
 void init_data(void);
@@ -128,6 +56,7 @@ void lcd_printf(char code_printf);
 void reset_timer_data(void);
 void write_data(void);
 void read_data(void);
+void get_adc_accu(void);
 
 unsigned char read_eeprom(unsigned char addr);
 void write_eeprom(unsigned char addr, unsigned char value);
@@ -137,8 +66,10 @@ void disable_reset(void);
 //===============================
 void main()
 {
-   // chong treo xu li
-   disable_reset();
+   disable_reset(); // chong treo xu li
+   // khoi dong adc
+   setup_adc(ADC_CLOCK_DIV_2 | ADC_TAD_MUL_2);
+   SETUP_ADC_PORTS(sAN4);
    // KHOI DONG NGAT TIMER 0
    SETUP_TIMER_0(T0_INTERNAL | T0_DIV_4);
    enable_interrupts(INT_TIMER0);
@@ -159,20 +90,21 @@ void main()
       {
       case 0: // TINH NANG CHINH
          check_AC();
+         get_adc_accu();
 
          switch (state_AC)
          {
          case 0: // Timer delay ktra ac
             break;
 
-         case 1: // co AC ->hien thi LCD
+         case 1: // co AC -> hien thi LCD
             reset_timer_data();
             output_low(out_fire);
             output_low(out_delay);
             break;
-         case 2: // mat AC: DELAY 1
+         case 2: // mat AC: phong accu
             output_high(out_delay);
-            if (val_timer_tri_hoan <= 0 && flag_timer_tri_hoan_60s <= 0)
+            if (adc_accu <= input_dc_lv2 - delta_dc)
             {
                state_AC = 3;
             }
@@ -233,13 +165,7 @@ void main()
                write_data(); // Cap nhat flag_error = 0
                output_low(out_temp);
                output_low(out_error);
-               state_AC = 5;
-            }
-            break;
-         case 5: // DELAY 3
-            if (val_timer_tam_dung <= 0 && flag_timer_tam_dung_60s <= 0)
-            {
-               state_AC = 3;
+               state_AC = 2;
                reset_timer_data();
             }
             break;
@@ -357,26 +283,37 @@ void init_data(void)
    timer_exit = 0;
    timer_backlight = 240;
 
-   val_timer_tri_hoan = timer_tri_hoan, timer_tri_hoan_md = 60;                                                // LONG DELAY 1
    val_counter_restart_mpd = 1, counter_restart_mpd_current = counter_restart_mpd, counter_restart_mpd_md = 4; // LONG SO LAN KHOI DONG LAI MPD
    val_timer_chay_lien_tuc = timer_chay_lien_tuc, timer_chay_lien_tuc_md = 3;                                  // LONG DELAY 2
-   val_timer_tam_dung = timer_tam_dung, timer_tam_dung_md = 60;                                                // LONG DELAY 3
    val_timer_ktra_AC = timer_ktra_AC, timer_ktra_AC_md = 60;                                                   // LONG KT AC TIMER
    flag_mn = 0;
    val_timer_ktra_mn = timer_ktra_mn, timer_ktra_mn_md = 30; // LONG KT MN TIMER
    val_timer_on_mpd = 20, timer_on_mpd = 20;
    val_timer_off_mpd = 20, timer_off_mpd = 20;
 
-   val_timer_AC = 0; // LONG TIMER CO AC
-
    val_loading = 0;
 
    counter_timer0 = 0, flag_timer_60s_password = 0;
-   flag_timer_tri_hoan_60s = 0, flag_timer_chay_lien_tuc_60s = 0, flag_timer_chay_lien_tuc_60p = 0, flag_timer_tam_dung_60s = 0;
-   flag_timer_AC_60s = 0, flag_timer_AC_60p = 0;
    pwm_lcd = 0;
    sum_out = 0, sum_out_old = 0, loop_not_display = 0;
+
+   input_dc_lv2_md = 47;
+   delta_dc_md = 0.2;
+   adc_accu = 0;
 }
+
+void get_adc_accu(void)
+{
+   adc_accu = 0;
+   SET_ADC_CHANNEL(4);
+   for (int i = 2000; i != 0; i--)
+   {
+      float adc_temp = READ_ADC();
+      adc_accu = adc_temp > adc_accu ? adc_temp : adc_accu;
+   }
+   adc_accu = (adc_accu - 19) * (52.9 / 869) + 1.1;
+}
+
 char check_mn(void)
 {
    flag_mn = 1;
@@ -403,7 +340,7 @@ void check_AC(void)
       {
          if (!(status_AC()))
          {
-            state_AC = val_timer_AC < timer_chay_lien_tuc ? 3 : 2;
+            state_AC = 2;
          }
          val_timer_ktra_AC = timer_ktra_AC;
       }
@@ -416,7 +353,6 @@ void check_AC(void)
          if (status_AC())
          {
             state_AC = 1;
-            val_timer_AC = 0;
          }
          val_timer_ktra_AC = timer_ktra_AC;
       }
@@ -429,12 +365,12 @@ void display(char code_print)
    {
    case 0: // ko in
       break;
-   case 1: // delay 1
+   case 1: // phong_accu
       LCD_PUTCMD(Line_1);
-      PRINTF(LCD_PUTCHAR, "TG TRI HOAN MPD");
+      PRINTF(LCD_PUTCHAR, "DIEN AP AC QUY");
       clear_lcd();
       LCD_PUTCMD(Line_2);
-      PRINTF(LCD_PUTCHAR, "%02u:%02u:%02u", minute_to_hour(val_timer_tri_hoan), minute_to_minute(val_timer_tri_hoan), flag_timer_tri_hoan_60s);
+      PRINTF(LCD_PUTCHAR, "DC: %02.1fV", adc_accu);
       clear_lcd();
       break;
    case 2: // delay 2
@@ -443,14 +379,6 @@ void display(char code_print)
       clear_lcd();
       LCD_PUTCMD(Line_2);
       PRINTF(LCD_PUTCHAR, "%02u:%02u:%02u", val_timer_chay_lien_tuc, flag_timer_chay_lien_tuc_60p, flag_timer_chay_lien_tuc_60s);
-      clear_lcd();
-      break;
-   case 3: // delay 3
-      LCD_PUTCMD(Line_1);
-      PRINTF(LCD_PUTCHAR, "TG TAM DUNG MPD");
-      clear_lcd();
-      LCD_PUTCMD(Line_2);
-      PRINTF(LCD_PUTCHAR, "%02u:%02u:%02u", minute_to_hour(val_timer_tam_dung), minute_to_minute(val_timer_tam_dung), flag_timer_tam_dung_60s);
       clear_lcd();
       break;
    case 4: // Do AC
@@ -470,13 +398,13 @@ void display(char code_print)
          LCD_PUTCMD(Line_2);
          clear_lcd();
          LCD_PUTCMD(Line_2);
-         PRINTF(LCD_PUTCHAR, "MPD LOI");
+         PRINTF(LCD_PUTCHAR, "DC: %02.1fV MPD LOI", adc_accu);
          clear_lcd();
       }
       else
       {
          LCD_PUTCMD(Line_2);
-         PRINTF(LCD_PUTCHAR, "MPD TOT");
+         PRINTF(LCD_PUTCHAR, "DC: %02.1fV MPD TOT", adc_accu);
          clear_lcd();
       }
       break;
@@ -500,22 +428,21 @@ void display(char code_print)
 
 void default_data(void)
 {
-   timer_tri_hoan = timer_tri_hoan_md;           // LONG DELAY 1
+   input_dc_lv2 = input_dc_lv2_md;
+   delta_dc = delta_dc_md;
    counter_restart_mpd = counter_restart_mpd_md; // LONG SO LAN KHOI DONG LAI MPD
    timer_chay_lien_tuc = timer_chay_lien_tuc_md; // LONG DELAY 2
-   timer_tam_dung = timer_tam_dung_md;           // LONG DELAY 3
    timer_ktra_AC = timer_ktra_AC_md;             // LONG KT AC TIMER
    timer_ktra_mn = timer_ktra_mn_md;             // LONG KT MN TIMER
    flag_error = 0;                               // LONG FLAG = 0 la ko loi, = 1 la LOI
 }
 void display_center(void)
 {
-
    unsigned char menu_main[10][17] = {{""},
                                       {"MAT KHAU !"},
-                                      {"TG TRI HOAN MPD"},
+                                      {"DIEN AP DC LOW"},
                                       {"TG CHAY LIEN TUC"},
-                                      {"TG TAM DUNG MPD"},
+                                      {"DELTA D.A DC LOW"},
                                       {"TG KTRA D.AP AC"},
                                       {"TG KTRA D.AP MPD"},
                                       {"SO LAN KHOI DONG"},
@@ -542,15 +469,12 @@ void display_center(void)
          display(ac_bthg);
          break;
       case 2:
-         display(tg_tri_hoan);
+         display(phong_accu);
          break;
       case 3:
          break;
       case 4:
          display(tg_chay_lien_tuc);
-         break;
-      case 5:
-         display(tg_tam_dung);
          break;
       case 10:
          display(error);
@@ -563,9 +487,9 @@ void display_center(void)
       sch_1_s_set();
       break;
 
-   case 2:                // TG TRI HOAN MPD
+   case 2:                // DIEN AP DC LOW
       LCD_PUTCMD(Line_2); // Dua hien thi chu dau dong hang` duoi
-      PRINTF(LCD_PUTCHAR, "PHUT: <%01u>", timer_tri_hoan);
+      PRINTF(LCD_PUTCHAR, "VOLT DC: <%02.1f>", input_dc_lv2);
       clear_lcd();
       break;
 
@@ -575,9 +499,9 @@ void display_center(void)
       clear_lcd();
       break;
 
-   case 4:                // TG TAM DUNG MPD
+   case 4:                // DELTA D.A DC LOW
       LCD_PUTCMD(Line_2); // Dua hien thi chu dau dong hang` duoi
-      PRINTF(LCD_PUTCHAR, "PHUT: <%01u>", timer_tam_dung);
+      PRINTF(LCD_PUTCHAR, "VOLT DC: <%02.1f>", delta_dc);
       clear_lcd();
       break;
    case 5:                // TG KTRA DA AC
@@ -612,16 +536,13 @@ void display_center(void)
 //=========================
 void reset_timer_data(void)
 {
-   val_timer_tri_hoan = timer_tri_hoan;
    val_counter_restart_mpd = 1;
    counter_restart_mpd_current = counter_restart_mpd;
    val_timer_chay_lien_tuc = timer_chay_lien_tuc;
-   val_timer_tam_dung = timer_tam_dung;
    val_timer_on_mpd = timer_on_mpd;
    val_timer_off_mpd = timer_off_mpd;
    val_timer_ktra_mn = timer_ktra_mn;
    state_mn = 0;
-   flag_timer_tri_hoan_60s = 0, flag_timer_chay_lien_tuc_60s = 0, flag_timer_chay_lien_tuc_60p = 0, flag_timer_tam_dung_60s = 0;
 }
 
 void lcd_printf(char code_printf)
@@ -792,10 +713,11 @@ void process_up(void)
       *sch_1 = 0;
       break;
 
-   case 2: // TG TRI HOAN
-      if (++timer_tri_hoan > 254)
+   case 2: // DIEN AP DC LOW
+      input_dc_lv2 += 0.1;
+      if (input_dc_lv2 > 60)
       {
-         timer_tri_hoan = 1;
+         input_dc_lv2 = 40;
       }
       break;
    case 3: // TG CHAY LIEN TUC
@@ -805,10 +727,11 @@ void process_up(void)
       }
       break;
 
-   case 4: // TG TAM DUNG MPD
-      if (++timer_tam_dung > 254)
+   case 4: // DELTA D.A DC LOW
+      delta_dc += 0.1;
+      if (delta_dc > 1)
       {
-         timer_tam_dung = 1;
+         delta_dc = 0.1;
       }
       break;
 
@@ -859,10 +782,11 @@ void process_down(void)
       *sch_1 = 0;
       break;
 
-   case 2: // TG TRI HOAN
-      if (--timer_tri_hoan < 1)
+   case 2: // DIEN AP DC LOW
+      input_dc_lv2 -= 0.1;
+      if (input_dc_lv2 < 40)
       {
-         timer_tri_hoan = 254;
+         input_dc_lv2 = 60;
       }
       break;
 
@@ -873,10 +797,11 @@ void process_down(void)
       }
       break;
 
-   case 4: // TG TAM DUNG MPD
-      if (--timer_tam_dung < 1)
+   case 4: // DELTA D.A DC LOW
+      delta_dc -= 0.1;
+      if (delta_dc < 0.1)
       {
-         timer_tam_dung = 254;
+         delta_dc = 1;
       }
       break;
 
@@ -936,9 +861,9 @@ void process_exit(void)
 
 void write_data(void)
 {
-   wee(timer_tri_hoan_ee, timer_tri_hoan);
+   wee16(input_dc_lv2_ee, (input_dc_lv2 * 10));
    wee(timer_chay_lien_tuc_ee, timer_chay_lien_tuc);
-   wee(timer_tam_dung_ee, timer_tam_dung);
+   wee16(delta_dc_ee, (delta_dc * 10));
    wee(timer_ktra_mn_ee, timer_ktra_mn);
    wee(timer_ktra_AC_ee, timer_ktra_AC);
    wee(counter_restart_mpd_ee, counter_restart_mpd);
@@ -948,13 +873,17 @@ void write_data(void)
 //=========================
 void read_data(void)
 {
-   timer_tri_hoan = ree(timer_tri_hoan_ee);
+   input_dc_lv2 = ree16(input_dc_lv2_ee);
+   input_dc_lv2 = input_dc_lv2 / 10;
+   delta_dc = ree16(delta_dc_ee);
+   delta_dc = delta_dc / 10;
    timer_chay_lien_tuc = ree(timer_chay_lien_tuc_ee);
-   timer_tam_dung = ree(timer_tam_dung_ee);
    timer_ktra_mn = ree(timer_ktra_mn_ee);
    timer_ktra_AC = ree(timer_ktra_AC_ee);
    counter_restart_mpd = ree(counter_restart_mpd_ee);
    flag_error = ree(flag_error_ee);
+   input_dc_lv2 = ree(input_dc_lv2_ee);
+   delta_dc = ree(delta_dc_ee)
 }
 
 void disable_reset(void)
@@ -1024,26 +953,6 @@ void interrupt_timer0()
             if (val_timer_ktra_AC > 0)
                val_timer_ktra_AC--;
             break;
-         case 1: // TIMER CO AC
-            if (--flag_timer_AC_60s > 59)
-            {
-               flag_timer_AC_60s = 59;
-               if (--flag_timer_AC_60p > 59)
-               {
-                  flag_timer_AC_60p = 59;
-                  if (val_timer_AC < timer_chay_lien_tuc)
-                     val_timer_AC++;
-               }
-            }
-            break;
-         case 2: // TIMER TRI HOAN
-            if (--flag_timer_tri_hoan_60s > 59)
-            {
-               flag_timer_tri_hoan_60s = 59;
-               if (val_timer_tri_hoan > 0)
-                  val_timer_tri_hoan--;
-            }
-            break;
          case 3:
             switch (state_mn)
             {
@@ -1073,14 +982,6 @@ void interrupt_timer0()
                   if (val_timer_chay_lien_tuc > 0)
                      val_timer_chay_lien_tuc--;
                }
-            }
-            break;
-         case 5:
-            if (--flag_timer_tam_dung_60s > 59)
-            {
-               flag_timer_tam_dung_60s = 59;
-               if (val_timer_tam_dung > 0)
-                  val_timer_tam_dung--;
             }
             break;
          }
