@@ -934,8 +934,8 @@ void process_exit(void)
 
 void write_eeprom16(unsigned char addr, float data)
 {
-   write_eeprom(addr, make8(data, 0));
-   write_eeprom(addr + 1, make8(data, 1));
+   // write_eeprom(addr, make8(data, 0));
+   // write_eeprom(addr + 1, make8(data, 1));
 }
 
 float read_eeprom16(unsigned char addr)
