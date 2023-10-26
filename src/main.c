@@ -1,4 +1,11 @@
 #include "main.h"
+#include "C:\Program Files (x86)\PICC\Devices\18f26k20.h"
+#device adc = 10
+#fuses hs, nolvp, protect, MCLR, NOPUT, BORV27
+#include "C:\Program Files (x86)\PICC\Drivers\stdlib.h"
+#fuses WDT16384
+#use delay(clock = 24000000)
+#include "lcd_lib_4bit.c"
 #define ree16(x) read_eeprom16(x);
 #define wee16(x, y) write_eeprom16(x, y);
 
