@@ -863,6 +863,17 @@ void process_exit(void)
    }
 }
 
+void write_eeprom16(unsigned char addr, unsigned long data)
+{
+   write_eeprom(addr, make8(data, 0));
+   write_eeprom(addr + 1, make8(data, 1));
+}
+
+unsigned long read_eeprom16(unsigned char addr)
+{
+   return make16(read_eeprom(addr + 1), read_eeprom(addr));
+}
+
 void write_data(void)
 {
    wee16(input_dc_lv2_ee, (input_dc_lv2 * 10));
