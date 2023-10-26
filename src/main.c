@@ -38,7 +38,7 @@
 #define ree(x) read_eeprom(x);
 #define wee(x, y) write_eeprom(x, y);
 #define ree16(x) read_eeprom16(x);
-#define wee16(x, y) write_eeprom16(x, y);
+#define wee16(x, y) test(x, y);
 
 #define phong_accu 1
 #define tg_chay_lien_tuc 2
@@ -132,7 +132,7 @@ void get_adc_accu(void);
 unsigned char read_eeprom(unsigned char addr);
 void write_eeprom(unsigned char addr, unsigned char value);
 float read_eeprom16(unsigned char addr);
-void write_eeprom16(unsigned char addr, float data);
+void test(unsigned char addr, float data);
 
 void disable_reset(void);
 
@@ -932,7 +932,7 @@ void process_exit(void)
    }
 }
 
-void write_eeprom16(unsigned char addr, float data)
+void test(unsigned char addr, float data)
 {
    // write_eeprom(addr, make8(data, 0));
    // write_eeprom(addr + 1, make8(data, 1));
