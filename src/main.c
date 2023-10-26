@@ -25,6 +25,8 @@ char val_timer_ktra_mn = 30, timer_ktra_mn = 30, timer_ktra_mn_md = 30;         
 char val_timer_on_mpd = 20, timer_on_mpd = 20;
 char val_timer_off_mpd = 20, timer_off_mpd = 20;
 
+char flag_timer_60s_password = 0;
+
 char val_loading = 0;
 
 char flag_error = 0; // LONG FLAG = 0 la ko loi, = 1 la LOI
@@ -60,6 +62,8 @@ void get_adc_accu(void);
 
 unsigned char read_eeprom(unsigned char addr);
 void write_eeprom(unsigned char addr, unsigned char value);
+unsigned long read_eeprom16(unsigned char addr);
+void write_eeprom16(unsigned char addr, unsigned long data);
 
 void disable_reset(void);
 
@@ -882,8 +886,6 @@ void read_data(void)
    timer_ktra_AC = ree(timer_ktra_AC_ee);
    counter_restart_mpd = ree(counter_restart_mpd_ee);
    flag_error = ree(flag_error_ee);
-   input_dc_lv2 = ree(input_dc_lv2_ee);
-   delta_dc = ree(delta_dc_ee)
 }
 
 void disable_reset(void)
