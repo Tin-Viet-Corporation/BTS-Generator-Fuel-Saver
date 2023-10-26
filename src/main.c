@@ -945,7 +945,7 @@ unsigned long read_eeprom16(unsigned char addr)
 
 void write_data(void)
 {
-   wee16(input_dc_lv2_ee, (input_dc_lv2 * 10));
+   write_eeprom16(input_dc_lv2_ee, (input_dc_lv2 * 10));
    wee(timer_chay_lien_tuc_ee, timer_chay_lien_tuc);
    // wee16(delta_dc_ee, (delta_dc * 10));
    wee(timer_ktra_mn_ee, timer_ktra_mn);
