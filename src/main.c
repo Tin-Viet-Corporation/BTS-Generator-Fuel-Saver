@@ -131,7 +131,7 @@ void get_adc_accu(void);
 
 unsigned char read_eeprom(unsigned char addr);
 void write_eeprom(unsigned char addr, unsigned char value);
-float read_eeprom16(unsigned char addr);
+unsigned long read_eeprom16(unsigned char addr);
 void write_eeprom16(unsigned char addr, float data);
 
 void disable_reset(void);
@@ -938,7 +938,7 @@ void write_eeprom16(unsigned char addr, float data)
    // write_eeprom(addr + 1, make8(data, 1));
 }
 
-float read_eeprom16(unsigned char addr)
+unsigned long read_eeprom16(unsigned char addr)
 {
    return make16(read_eeprom(addr + 1), read_eeprom(addr));
 }
