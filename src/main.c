@@ -326,7 +326,7 @@ void get_adc_accu(void)
    for (int i = 2000; i != 0; i--)
    {
       float adc_temp = READ_ADC();
-      adc_accu += adc_temp > adc_accu ? adc_temp : adc_accu;
+      adc_accu = adc_temp > adc_accu ? adc_temp : adc_accu;
    }
    adc_accu = (adc_accu - 19) * (52.9 / 869) + 1.1;
    if (adc_accu < 2)
