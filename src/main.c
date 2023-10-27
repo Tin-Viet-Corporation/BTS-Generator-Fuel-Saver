@@ -316,7 +316,7 @@ void init_data(void)
    delta_dc_md = 0.2;
    adc_accu = 0;
 
-   flag_accu = 0
+   flag_accu = 0;
 }
 
 void get_adc_accu(void)
