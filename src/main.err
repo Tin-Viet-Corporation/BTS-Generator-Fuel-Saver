@@ -1,5 +1,0 @@
-Compiling D:\Tin Viet Telecom Corp\BTS-Generator-Fuel-Saver\src\main on 26-Oct-23 at 21:44
->>> Warning 203 "D:\Tin Viet Telecom Corp\BTS-Generator-Fuel-Saver\src\main.c" Line 89(1,1): Condition always TRUE
-      Memory usage:   ROM=15%      RAM=4% - 9%
-      0 Errors,  1 Warnings.
-Build Successful.
