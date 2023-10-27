@@ -1,10 +1,9 @@
 #include "C:\Program Files (x86)\PICC\Devices\18f26k20.h"
-#include "C:\Program Files (x86)\PICC\Drivers\stdlib.h"
-
 #device adc = 10
 #fuses hs, nolvp, protect, MCLR, NOPUT, BORV27
 #fuses WDT16384
 #use delay(clock = 24000000)
+#include "C:\Program Files (x86)\PICC\Drivers\stdlib.h"
 
 #define sw_mode PIN_A3
 #define sw_up PIN_A2
