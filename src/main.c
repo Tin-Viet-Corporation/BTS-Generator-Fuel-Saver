@@ -305,6 +305,7 @@ void init_data(void)
    val_timer_on_mpd = 20, timer_on_mpd = 20;
    val_timer_off_mpd = 20, timer_off_mpd = 20;
 
+   flag_timer_chay_lien_tuc_60s = 0, flag_timer_chay_lien_tuc_60p = 0;
    val_loading = 0;
 
    counter_timer0 = 0, flag_timer_60s_password = 0;
@@ -580,6 +581,7 @@ void reset_timer_data(void)
    val_timer_off_mpd = timer_off_mpd;
    val_timer_ktra_mn = timer_ktra_mn;
    state_mn = 0;
+   flag_timer_chay_lien_tuc_60s = 0, flag_timer_chay_lien_tuc_60p = 0;
 }
 
 void lcd_printf(char code_printf)
