@@ -132,7 +132,7 @@ void get_adc_accu(void);
 unsigned char read_eeprom(unsigned char addr);
 void write_eeprom(unsigned char addr, unsigned char value);
 unsigned long read_eeprom16(unsigned char addr);
-void write_eeprom16(unsigned char addr, float data);
+void write_eeprom16(unsigned char addr, unsigned long data);
 
 void disable_reset(void);
 
@@ -932,10 +932,10 @@ void process_exit(void)
    }
 }
 
-void write_eeprom16(unsigned char addr, float data)
+void write_eeprom16(unsigned char addr, unsigned long data)
 {
-   // write_eeprom(addr, make8(data, 0));
-   // write_eeprom(addr + 1, make8(data, 1));
+   write_eeprom(addr, make8(data, 0));
+   write_eeprom(addr + 1, make8(data, 1));
 }
 
 unsigned long read_eeprom16(unsigned char addr)
@@ -945,9 +945,9 @@ unsigned long read_eeprom16(unsigned char addr)
 
 void write_data(void)
 {
-   // wee16(input_dc_lv2_ee, (input_dc_lv2 * 10));
+   wee16(timer_chay_lien_tuc_ee, (input_dc_lv2 * 10));
    wee(timer_chay_lien_tuc_ee, timer_chay_lien_tuc);
-   // wee16(delta_dc_ee, (delta_dc * 10));
+   wee16(timer_chay_lien_tuc_ee, (delta_dc * 10));
    wee(timer_ktra_mn_ee, timer_ktra_mn);
    wee(timer_ktra_AC_ee, timer_ktra_AC);
    wee(counter_restart_mpd_ee, counter_restart_mpd);
@@ -958,9 +958,9 @@ void write_data(void)
 void read_data(void)
 {
    input_dc_lv2 = ree16(timer_chay_lien_tuc_ee);
-   // input_dc_lv2 = input_dc_lv2 / 10;
-   // delta_dc = ree16(delta_dc_ee);
-   // delta_dc = delta_dc / 10;
+   input_dc_lv2 = input_dc_lv2 / 10;
+   delta_dc = ree16(timer_chay_lien_tuc_ee);
+   delta_dc = delta_dc / 10;
    timer_chay_lien_tuc = ree(timer_chay_lien_tuc_ee);
    timer_ktra_mn = ree(timer_ktra_mn_ee);
    timer_ktra_AC = ree(timer_ktra_AC_ee);
