@@ -325,10 +325,14 @@ void get_adc_accu(void)
    SET_ADC_CHANNEL(4);
    for (int i = 2000; i != 0; i--)
    {
-      float adc_temp = READ_ADC();
-      adc_accu = adc_temp > adc_accu ? adc_temp : adc_accu;
+      // float adc_temp = READ_ADC();
+      adc_accu += READ_ADC();
    }
-   adc_accu = (adc_accu - 19) * (52.9 / 869) + 1.1;
+   adc_accu = (adc_accu / 2000 - 19) * (52.9 / 869) + 1.1;
+   if (adc_accu < 2)
+   {
+      flag_accu = 1;
+   }
 }
 
 char check_mn(void)
