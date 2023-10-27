@@ -947,7 +947,7 @@ void write_data(void)
 {
    wee16(timer_chay_lien_tuc_ee, (input_dc_lv2 * 10));
    wee(timer_chay_lien_tuc_ee, timer_chay_lien_tuc);
-   wee16(timer_chay_lien_tuc_ee, (delta_dc * 10));
+   wee16(delta_dc_ee, (delta_dc * 10));
    wee(timer_ktra_mn_ee, timer_ktra_mn);
    wee(timer_ktra_AC_ee, timer_ktra_AC);
    wee(counter_restart_mpd_ee, counter_restart_mpd);
@@ -959,7 +959,7 @@ void read_data(void)
 {
    input_dc_lv2 = ree16(timer_chay_lien_tuc_ee);
    input_dc_lv2 = input_dc_lv2 / 10;
-   delta_dc = ree16(timer_chay_lien_tuc_ee);
+   delta_dc = ree16(delta_dc_ee);
    delta_dc = delta_dc / 10;
    timer_chay_lien_tuc = ree(timer_chay_lien_tuc_ee);
    timer_ktra_mn = ree(timer_ktra_mn_ee);
