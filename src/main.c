@@ -328,7 +328,7 @@ void get_adc_accu(void)
       // float adc_temp = READ_ADC();
       adc_accu += READ_ADC();
    }
-   adc_accu = (adc_accu / 2000 - 19) * (52.9 / 869) + 1.1;
+   adc_accu = (adc_accu / 1999 - 19) * (52.9 / 869) + 1.1;
    if (adc_accu < 2)
    {
       flag_accu = 1;
