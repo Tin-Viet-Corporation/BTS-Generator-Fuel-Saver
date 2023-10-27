@@ -65,7 +65,7 @@
 #define timer_ktra_mn_ee timer_ktra_AC_ee + 1
 #define flag_error_ee timer_ktra_mn_ee + 1
 #define delta_dc_ee flag_error_ee + 1
-#define input_dc_lv2_ee = delta_dc_ee + 2
+#define input_dc_lv2_ee delta_dc_ee + 2
 
 #define size_pass 5
 
@@ -945,7 +945,7 @@ unsigned long read_eeprom16(unsigned char addr)
 
 void write_data(void)
 {
-   wee16(delta_dc_ee, (input_dc_lv2 * 10));
+   wee16(input_dc_lv2_ee, (input_dc_lv2 * 10));
    wee(timer_chay_lien_tuc_ee, timer_chay_lien_tuc);
    wee16(delta_dc_ee, (delta_dc * 10));
    wee(timer_ktra_mn_ee, timer_ktra_mn);
@@ -957,7 +957,7 @@ void write_data(void)
 //=========================
 void read_data(void)
 {
-   input_dc_lv2 = ree16(delta_dc_ee);
+   input_dc_lv2 = ree16(input_dc_lv2_ee);
    input_dc_lv2 = input_dc_lv2 / 10;
    delta_dc = ree16(delta_dc_ee);
    delta_dc = delta_dc / 10;
