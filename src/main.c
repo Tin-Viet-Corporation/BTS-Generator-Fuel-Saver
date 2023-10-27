@@ -443,7 +443,7 @@ void display(char code_print)
       PRINTF(LCD_PUTCHAR, "DIEN AP AC QUY");
       clear_lcd();
       LCD_PUTCMD(Line_2);
-      PRINTF(LCD_PUTCHAR, "DC: %02.1fV", adc_accu);
+      PRINTF(LCD_PUTCHAR, "DC:%02.1fV", adc_accu);
       clear_lcd();
       break;
    case 2: // delay 2
@@ -471,13 +471,13 @@ void display(char code_print)
          LCD_PUTCMD(Line_2);
          clear_lcd();
          LCD_PUTCMD(Line_2);
-         PRINTF(LCD_PUTCHAR, "DC: %02.1fV MPD LOI", adc_accu);
+         PRINTF(LCD_PUTCHAR, "DC:%02.1fV MPD LOI", adc_accu);
          clear_lcd();
       }
       else
       {
          LCD_PUTCMD(Line_2);
-         PRINTF(LCD_PUTCHAR, "DC: %02.1fV MPD TOT", adc_accu);
+         PRINTF(LCD_PUTCHAR, "DC:%02.1fV MPD TOT", adc_accu);
          clear_lcd();
       }
       break;
