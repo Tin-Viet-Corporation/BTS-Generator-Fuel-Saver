@@ -110,11 +110,7 @@ void main()
             break;
          case 2: // mat AC: phong accu
             output_high(out_delay);
-            if (adc_accu < 2)
-            {
-               flag_accu = 1;
-            }
-            else if (adc_accu <= input_dc_lv2 - delta_dc)
+            if (adc_accu > 2 && adc_accu <= input_dc_lv2 - delta_dc)
             {
                state_AC = 3;
             }
@@ -395,7 +391,7 @@ void display(char code_print)
          LCD_PUTCMD(Line_2);
          clear_lcd();
          LCD_PUTCMD(Line_2);
-         PRINTF(LCD_PUTCHAR, "DC: DAU NOI ACCU!");
+         PRINTF(LCD_PUTCHAR, "DC:DAU NOI ACCU!");
          clear_lcd();
       }
       else
@@ -432,7 +428,7 @@ void display(char code_print)
          LCD_PUTCMD(Line_2);
          clear_lcd();
          LCD_PUTCMD(Line_2);
-         PRINTF(LCD_PUTCHAR, "DC: DAU NOI ACCU!");
+         PRINTF(LCD_PUTCHAR, "DC:DAU NOI ACCU!");
          clear_lcd();
       }
       else if (flag_error)
