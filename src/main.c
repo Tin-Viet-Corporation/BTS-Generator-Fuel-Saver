@@ -114,13 +114,9 @@ void main()
             {
                flag_accu = 1;
             }
-            else
+            if (adc_accu <= input_dc_lv2 - delta_dc)
             {
-               if (adc_accu <= input_dc_lv2 - delta_dc)
-               {
-                  state_AC = 3;
-               }
-               flag_accu = 0;
+               state_AC = 3;
             }
             break;
          case 3: // mat AC: DO DIEN AP MPD
@@ -332,6 +328,10 @@ void get_adc_accu(void)
    if (adc_accu < 2)
    {
       flag_accu = 1;
+   }
+   else
+   {
+      flag_accu = 0;
    }
 }
 
