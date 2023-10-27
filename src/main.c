@@ -957,12 +957,11 @@ void write_data(void)
 //=========================
 void read_data(void)
 {
-   // input_dc_lv2 = ree16(input_dc_lv2_ee);
+   input_dc_lv2 = ree16(timer_chay_lien_tuc_ee);
    // input_dc_lv2 = input_dc_lv2 / 10;
    // delta_dc = ree16(delta_dc_ee);
    // delta_dc = delta_dc / 10;
-   float test = ree16(timer_chay_lien_tuc_ee)
-       timer_chay_lien_tuc = ree(timer_chay_lien_tuc_ee);
+   timer_chay_lien_tuc = ree(timer_chay_lien_tuc_ee);
    timer_ktra_mn = ree(timer_ktra_mn_ee);
    timer_ktra_AC = ree(timer_ktra_AC_ee);
    counter_restart_mpd = ree(counter_restart_mpd_ee);
