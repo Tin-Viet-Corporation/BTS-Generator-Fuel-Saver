@@ -86,7 +86,14 @@ funclist
 nbproject/Makefile-*
 disassembly/
 .generated_files/
-src/main.ccspjt
 
 .DS_Store
-# End of https://www.toptal.com/developers/gitignore/api/mplabx
+
+src/main.cof
+src/main.cof
+src/main.ccspjt
+src/main.err
+src/main.esym
+src/main.STA
+src/main.tre
+src/main.xsym
