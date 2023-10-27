@@ -32,6 +32,7 @@ char val_loading = 0;
 
 char flag_error = 0; // LONG FLAG = 0 la ko loi, = 1 la LOI
 char flag_mn = 0;    // LONG FLAG = 0 la chay xong check_mn(), = 1 la dang chay
+char flag_accu = 0;
 
 unsigned long counter_timer0 = 0;
 char flag_timer_chay_lien_tuc_60s = 60, flag_timer_chay_lien_tuc_60p = 60;
@@ -109,9 +110,17 @@ void main()
             break;
          case 2: // mat AC: phong accu
             output_high(out_delay);
-            if (adc_accu <= input_dc_lv2 - delta_dc)
+            if (adc_accu < 2)
             {
-               state_AC = 3;
+               flag_accu = 1;
+            }
+            else
+            {
+               if (adc_accu <= input_dc_lv2 - delta_dc)
+               {
+                  state_AC = 3;
+               }
+               flag_accu = 0;
             }
             break;
          case 3: // mat AC: DO DIEN AP MPD
@@ -305,6 +314,8 @@ void init_data(void)
    input_dc_lv2_md = 47;
    delta_dc_md = 0.2;
    adc_accu = 0;
+
+   flag_accu = 0
 }
 
 void get_adc_accu(void)
@@ -372,11 +383,24 @@ void display(char code_print)
       break;
    case 1: // phong_accu
       LCD_PUTCMD(Line_1);
-      PRINTF(LCD_PUTCHAR, "DIEN AP AC QUY");
+      PRINTF(LCD_PUTCHAR, "DIEN AP ACCU");
       clear_lcd();
-      LCD_PUTCMD(Line_2);
-      PRINTF(LCD_PUTCHAR, "DC:%02.1fV", adc_accu);
-      clear_lcd();
+      if (flag_accu)
+      {
+         LCD_PUTCMD(Line_2);
+         clear_lcd();
+         LCD_PUTCMD(Line_2);
+         PRINTF(LCD_PUTCHAR, "DC: DAU NOI ACCU!");
+         clear_lcd();
+      }
+      else
+      {
+         LCD_PUTCMD(Line_2);
+         clear_lcd();
+         LCD_PUTCMD(Line_2);
+         PRINTF(LCD_PUTCHAR, "DC:%02.1fV", adc_accu);
+         clear_lcd();
+      }
       break;
    case 2: // delay 2
       LCD_PUTCMD(Line_1);
@@ -398,7 +422,15 @@ void display(char code_print)
       LCD_PUTCMD(Line_1);
       PRINTF(LCD_PUTCHAR, "D.AP AC BTHUONG");
       clear_lcd();
-      if (flag_error)
+      if (flag_accu)
+      {
+         LCD_PUTCMD(Line_2);
+         clear_lcd();
+         LCD_PUTCMD(Line_2);
+         PRINTF(LCD_PUTCHAR, "DC: DAU NOI ACCU!");
+         clear_lcd();
+      }
+      else if (flag_error)
       {
          LCD_PUTCMD(Line_2);
          clear_lcd();
