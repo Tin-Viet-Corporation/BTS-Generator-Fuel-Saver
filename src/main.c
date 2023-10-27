@@ -114,7 +114,7 @@ void main()
             {
                flag_accu = 1;
             }
-            if (adc_accu <= input_dc_lv2 - delta_dc)
+            else if (adc_accu <= input_dc_lv2 - delta_dc)
             {
                state_AC = 3;
             }
