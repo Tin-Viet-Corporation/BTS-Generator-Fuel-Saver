@@ -1,6 +1,7 @@
 #include "./headers/utils.h"
 #include "lcd_lib_4bit.c"
 #include "./headers/eeprom.h"
+#include "./headers/display.h"
 
 unsigned char val_number_defaul[11] = {"0123456789"};
 // con tro phuc vu cai dat
@@ -32,7 +33,7 @@ char val_loading = 0;
 
 char flag_error = 0; // LONG FLAG = 0 la ko loi, = 1 la LOI
 char flag_mn = 0;    // LONG FLAG = 0 la chay xong check_mn(), = 1 la dang chay
-char flag_accu = 0;
+char flag_accu = 0;  // TODO: reuse this for broken accu flag
 
 unsigned long counter_timer0 = 0;
 char flag_timer_chay_lien_tuc_60s = 60, flag_timer_chay_lien_tuc_60p = 60;
@@ -110,7 +111,7 @@ void main()
             break;
          case 2: // mat AC: phong accu
             output_high(out_delay);
-            if (adc_accu > 2 && adc_accu <= input_dc_lv2 - delta_dc)
+            if (adc_accu > 10 && adc_accu <= input_dc_lv2 - delta_dc)
             {
                state_AC = 3;
             }
@@ -321,7 +322,7 @@ void get_adc_accu(void)
       adc_accu = adc_temp > adc_accu ? adc_temp : adc_accu;
    }
    adc_accu = (adc_accu - 19) * (52.9 / 869) + 1.1;
-   if (adc_accu < 2)
+   if (adc_accu < 10)
    {
       flag_accu = 1;
    }
