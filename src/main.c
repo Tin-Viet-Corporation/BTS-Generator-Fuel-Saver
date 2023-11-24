@@ -1,4 +1,4 @@
-#include "./headers/utils.h"
+#include "./headers/control.h"
 #include "lcd_lib_4bit.c"
 #include "./headers/eeprom.h"
 #include "./headers/display.h"
