@@ -4,7 +4,7 @@
 #include "./headers/display.h"
 #include "./headers/const.h"
 
-unsigned char val_number_defaul[11] = {"0123456789"};
+unsigned char val_number_default[11] = {"0123456789"};
 // con tro phuc vu cai dat
 char *sch_1 = 0, *sch_2 = 0, val_sch_1 = 0, val_sch_2 = 0;
 
@@ -34,7 +34,6 @@ char val_loading = 0;
 
 char flag_error = 0; // LONG FLAG = 0 la ko loi, = 1 la LOI
 char flag_mn = 0;    // LONG FLAG = 0 la chay xong check_mn(), = 1 la dang chay
-char flag_error_dau_noi_accu = 0;
 char flag_error_broken_accu = 0;
 
 unsigned long counter_timer0 = 0;
@@ -46,8 +45,6 @@ char sum_out = 0, sum_out_old = 0, loop_not_display = 0;
 float input_dc_lv2 = 47, input_dc_lv2_md = 47;
 float delta_dc = 0.2, delta_dc_md = 0.2;
 float adc_accu = 0;
-// ToDO remove this
-float temp;
 
 //===============================
 void init_data(void);
@@ -114,16 +111,7 @@ void main()
             output_low(out_delay);
             break;
          case 2: // mat AC: phong accu
-            // TODO uncomment this
-            // output_high(out_delay);
-            if (flag_error_dau_noi_accu)
-            {
-               output_low(out_fire);
-               output_high(out_temp);
-               output_high(out_error);
-               output_low(out_delay);
-            }
-            else if (flag_error_broken_accu)
+            if (flag_error_broken_accu)
             {
                val_timer_chay_lien_tuc = 24;
                output_high(out_temp);
@@ -136,6 +124,7 @@ void main()
             }
             break;
          case 3: // mat AC: DO DIEN AP MPD
+            output_high(out_delay);
             if (val_counter_restart_mpd <= counter_restart_mpd_current)
             {
                display(chay_mpd);
@@ -328,31 +317,15 @@ void init_data(void)
    delta_dc_md = 0.2;
    adc_accu = 0;
 
-   flag_error_dau_noi_accu = 0;
    flag_error_broken_accu = 0;
 }
 
 void verify_dc(void)
 {
    get_adc_accu();
-   if (adc_accu <= DC_LOW_LVL_2 && !flag_error_broken_accu)
+   if (adc_accu <= DC_LOW_LVL_2)
    {
-      // flag_error_dau_noi_accu = 1;
-      output_high(out_error);
-   }
-   else if (adc_accu <= input_dc_lv2 - delta_dc)
-   {
-      output_high(out_delay);
-      delay_ms(200);
-      get_adc_accu();
-      temp = adc_accu;
-      if (adc_accu <= DC_LOW_LVL_2)
-      {
-         flag_error_broken_accu = 1;
-      }
-   }
-   else
-   {
+      flag_error_broken_accu = 1;
    }
 }
 
@@ -360,17 +333,11 @@ void get_adc_accu(void)
 {
    adc_accu = 0;
    SET_ADC_CHANNEL(4);
-   // for (int i = 2000; i != 0; i--)
-   // {
-   //    float adc_temp = READ_ADC();
-   //    adc_accu = adc_temp > adc_accu ? adc_temp : adc_accu;
-   // }
    for (int i = 2000; i != 0; i--)
    {
-      float sum = READ_ADC();
-      adc_accu += sum;
+      float adc_temp = READ_ADC();
+      adc_accu = adc_temp > adc_accu ? adc_temp : adc_accu;
    }
-   adc_accu /= 2000;
    adc_accu = (adc_accu - 19) * (52.9 / 869) + 1.1;
 }
 
@@ -429,15 +396,7 @@ void display(char code_print)
       LCD_PUTCMD(Line_1);
       PRINTF(LCD_PUTCHAR, "DIEN AP ACCU");
       clear_lcd();
-      if (flag_error_dau_noi_accu)
-      {
-         LCD_PUTCMD(Line_2);
-         clear_lcd();
-         LCD_PUTCMD(Line_2);
-         PRINTF(LCD_PUTCHAR, "DC:DAU NOI ACCU!");
-         clear_lcd();
-      }
-      else if (flag_error_broken_accu)
+      if (flag_error_broken_accu)
       {
          LCD_PUTCMD(Line_2);
          clear_lcd();
@@ -474,15 +433,7 @@ void display(char code_print)
       LCD_PUTCMD(Line_1);
       PRINTF(LCD_PUTCHAR, "D.AP AC BTHUONG");
       clear_lcd();
-      if (flag_error_dau_noi_accu)
-      {
-         LCD_PUTCMD(Line_2);
-         clear_lcd();
-         LCD_PUTCMD(Line_2);
-         PRINTF(LCD_PUTCHAR, "DAU NOI ACCU!");
-         clear_lcd();
-      }
-      else if (flag_error_broken_accu)
+      if (flag_error_broken_accu)
       {
          if (flag_error)
          {
@@ -816,7 +767,7 @@ void process_up(void)
       break;
 
    case 1: // nhap mat khau
-      sch_2 = val_number_defaul;
+      sch_2 = val_number_default;
       if (++val_sch_2 > 10)
          val_sch_2 = 0;
       sch_2 = sch_2 + val_sch_2;
@@ -885,7 +836,7 @@ void process_down(void)
       break;
 
    case 1: // nhap mat khau
-      sch_2 = val_number_defaul;
+      sch_2 = val_number_default;
       if (--val_sch_2 > 10)
          val_sch_2 = 10;
       sch_2 = sch_2 + val_sch_2;
