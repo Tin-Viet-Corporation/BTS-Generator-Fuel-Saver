@@ -99,6 +99,7 @@ void main()
       {
       case 0: // TINH NANG CHINH
          check_AC();
+         verify_dc();
 
          switch (state_AC)
          {
@@ -106,14 +107,12 @@ void main()
             break;
 
          case 1: // co AC -> hien thi LCD
-            verify_dc();
             reset_timer_data();
             output_low(out_fire);
             output_low(out_delay);
             break;
          case 2: // mat AC: phong accu
             output_high(out_delay);
-            verify_dc();
             if (flag_error_dau_noi_accu)
             {
                output_low(out_fire);
