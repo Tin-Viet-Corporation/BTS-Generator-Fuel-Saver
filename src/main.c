@@ -478,6 +478,10 @@ void display(char code_print)
       PRINTF(LCD_PUTCHAR, "MPD LOI");
       clear_lcd();
       LCD_PUTCMD(Line_2);
+      if (flag_error_broken_accu)
+      {
+         PRINTF(LCD_PUTCHAR, "ACCU LOI");
+      }
       clear_lcd();
       break;
    }
