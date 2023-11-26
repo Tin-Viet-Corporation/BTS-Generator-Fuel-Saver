@@ -98,8 +98,8 @@ void main()
       switch (mode)
       {
       case 0: // TINH NANG CHINH
-         check_AC();
          verify_dc();
+         check_AC();
 
          switch (state_AC)
          {
@@ -464,7 +464,7 @@ void display(char code_print)
          LCD_PUTCMD(Line_2);
          clear_lcd();
          LCD_PUTCMD(Line_2);
-         PRINTF(LCD_PUTCHAR, "DC:DAU NOI ACCU!");
+         PRINTF(LCD_PUTCHAR, "DAU NOI ACCU!");
          clear_lcd();
       }
       else if (flag_error_broken_accu)
@@ -474,13 +474,13 @@ void display(char code_print)
             LCD_PUTCMD(Line_2);
             clear_lcd();
             LCD_PUTCMD(Line_2);
-            PRINTF(LCD_PUTCHAR, "DC:ACCU HONG! MPD LOI");
+            PRINTF(LCD_PUTCHAR, "ACCU HONG MPD LOI");
             clear_lcd();
          }
          else
          {
             LCD_PUTCMD(Line_2);
-            PRINTF(LCD_PUTCHAR, "DC:ACCU HONG! MPD TOT");
+            PRINTF(LCD_PUTCHAR, "ACCU HONG MPD TOT");
             clear_lcd();
          }
       }
