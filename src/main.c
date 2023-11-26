@@ -114,7 +114,8 @@ void main()
             output_low(out_delay);
             break;
          case 2: // mat AC: phong accu
-            output_high(out_delay);
+            // TODO uncomment this
+            // output_high(out_delay);
             if (flag_error_dau_noi_accu)
             {
                output_low(out_fire);
@@ -348,6 +349,10 @@ void verify_dc(void)
       {
          flag_error_broken_accu = 1;
       }
+   }
+   else
+   {
+      output_high(out_delay);
    }
 }
 
