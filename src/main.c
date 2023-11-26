@@ -47,7 +47,7 @@ float input_dc_lv2 = 47, input_dc_lv2_md = 47;
 float delta_dc = 0.2, delta_dc_md = 0.2;
 float adc_accu = 0;
 // ToDO remove this
-char temp;
+float temp;
 
 //===============================
 void init_data(void);
