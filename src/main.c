@@ -98,8 +98,8 @@ void main()
       switch (mode)
       {
       case 0: // TINH NANG CHINH
-         verify_dc();
          check_AC();
+         verify_dc();
 
          switch (state_AC)
          {
@@ -427,7 +427,7 @@ void display(char code_print)
          LCD_PUTCMD(Line_2);
          clear_lcd();
          LCD_PUTCMD(Line_2);
-         PRINTF(LCD_PUTCHAR, "DC:ACCU HONG!");
+         PRINTF(LCD_PUTCHAR, "DC:ACCU LOI!");
          clear_lcd();
       }
       else
@@ -474,13 +474,13 @@ void display(char code_print)
             LCD_PUTCMD(Line_2);
             clear_lcd();
             LCD_PUTCMD(Line_2);
-            PRINTF(LCD_PUTCHAR, "ACCU HONG MPD LOI");
+            PRINTF(LCD_PUTCHAR, "ACCU LOI MPD LOI");
             clear_lcd();
          }
          else
          {
             LCD_PUTCMD(Line_2);
-            PRINTF(LCD_PUTCHAR, "ACCU HONG MPD TOT");
+            PRINTF(LCD_PUTCHAR, "ACCU LOI MPD TOT");
             clear_lcd();
          }
       }
