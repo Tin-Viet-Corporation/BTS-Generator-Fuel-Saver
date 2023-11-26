@@ -452,7 +452,7 @@ void display(char code_print)
       PRINTF(LCD_PUTCHAR, "KIEM TRA AC");
       clear_lcd();
       LCD_PUTCMD(Line_2);
-      PRINTF(LCD_PUTCHAR, "00:%02u:%02u", sec_to_minute(val_timer_ktra_AC), sec_to_sec(val_timer_ktra_AC));
+      PRINTF(LCD_PUTCHAR, "00:%02u:%02u %02.1fV", sec_to_minute(val_timer_ktra_AC), sec_to_sec(val_timer_ktra_AC), adc_accu);
       clear_lcd();
       break;
    case 5: // AC BINH THUONG
