@@ -339,7 +339,7 @@ void verify_dc(void)
    }
    else if (adc_accu <= input_dc_lv2 - delta_dc)
    {
-      delay_ms(500);
+      delay_ms(10);
       get_adc_accu();
       if (adc_accu <= DC_LOW_LVL_2)
       {
