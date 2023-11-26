@@ -338,6 +338,7 @@ void verify_dc(void)
    if (adc_accu <= DC_LOW_LVL_2 && !flag_error_broken_accu)
    {
       // flag_error_dau_noi_accu = 1;
+      output_high(out_error);
    }
    else if (adc_accu <= input_dc_lv2 - delta_dc)
    {
@@ -352,9 +353,6 @@ void verify_dc(void)
    }
    else
    {
-      output_high(out_error);
-      delay_ms(2000);
-      output_low(out_error);
    }
 }
 
