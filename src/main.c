@@ -341,7 +341,7 @@ void verify_dc(void)
    }
    else if (adc_accu <= input_dc_lv2 - delta_dc)
    {
-      output_high(out_error);
+      output_high(out_delay);
       delay_ms(200);
       get_adc_accu();
       temp = adc_accu;
@@ -352,7 +352,7 @@ void verify_dc(void)
    }
    else
    {
-      output_high(out_delay);
+      output_high(out_error);
    }
 }
 
