@@ -360,11 +360,17 @@ void get_adc_accu(void)
 {
    adc_accu = 0;
    SET_ADC_CHANNEL(4);
+   // for (int i = 2000; i != 0; i--)
+   // {
+   //    float adc_temp = READ_ADC();
+   //    adc_accu = adc_temp > adc_accu ? adc_temp : adc_accu;
+   // }
    for (int i = 2000; i != 0; i--)
    {
-      float adc_temp = READ_ADC();
-      adc_accu = adc_temp > adc_accu ? adc_temp : adc_accu;
+      float sum = READ_ADC();
+      adc_accu += sum;
    }
+   adc_accu /= 2000;
    adc_accu = (adc_accu - 19) * (52.9 / 869) + 1.1;
 }
 
