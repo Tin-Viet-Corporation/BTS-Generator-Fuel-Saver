@@ -46,6 +46,8 @@ char sum_out = 0, sum_out_old = 0, loop_not_display = 0;
 float input_dc_lv2 = 47, input_dc_lv2_md = 47;
 float delta_dc = 0.2, delta_dc_md = 0.2;
 float adc_accu = 0;
+// ToDO remove this
+char temp;
 
 //===============================
 void init_data(void);
@@ -340,6 +342,7 @@ void verify_dc(void)
    {
       delay_ms(200);
       get_adc_accu();
+      temp = adc_accu;
       if (adc_accu <= DC_LOW_LVL_2)
       {
          output_high(out_error);
@@ -453,7 +456,7 @@ void display(char code_print)
       PRINTF(LCD_PUTCHAR, "KIEM TRA AC");
       clear_lcd();
       LCD_PUTCMD(Line_2);
-      PRINTF(LCD_PUTCHAR, "00:%02u:%02u %02.1fV", sec_to_minute(val_timer_ktra_AC), sec_to_sec(val_timer_ktra_AC), adc_accu);
+      PRINTF(LCD_PUTCHAR, "00:%02u:%02u %02.1fV", sec_to_minute(val_timer_ktra_AC), sec_to_sec(val_timer_ktra_AC), temp);
       clear_lcd();
       break;
    case 5: // AC BINH THUONG
@@ -526,7 +529,9 @@ void default_data(void)
    // TODO uncomment this
    // timer_chay_lien_tuc = timer_chay_lien_tuc_md; // LONG DELAY 2
    timer_chay_lien_tuc = 0;
-   timer_ktra_AC = timer_ktra_AC_md; // LONG KT AC TIMER
+   // TODO uncomment this
+   // timer_ktra_AC = timer_ktra_AC_md; // LONG KT AC TIMER
+   timer_ktra_AC = 10;
    timer_ktra_mn = timer_ktra_mn_md; // LONG KT MN TIMER
    flag_error = 0;                   // LONG FLAG = 0 la ko loi, = 1 la LOI
 }
