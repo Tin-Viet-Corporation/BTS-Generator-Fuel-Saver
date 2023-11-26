@@ -2,12 +2,13 @@
 #include "lcd_lib_4bit.c"
 #include "./headers/eeprom.h"
 #include "./headers/display.h"
+#include "./headers/const.h"
 
 unsigned char val_number_defaul[11] = {"0123456789"};
 // con tro phuc vu cai dat
 char *sch_1 = 0, *sch_2 = 0, val_sch_1 = 0, val_sch_2 = 0;
 
-char password[size_pass] = {"1111"};
+char password[PASSWORD_SIZE] = {"1111"};
 char str_temp[25] = "";
 char time_reset_password = 0;
 
@@ -33,7 +34,8 @@ char val_loading = 0;
 
 char flag_error = 0; // LONG FLAG = 0 la ko loi, = 1 la LOI
 char flag_mn = 0;    // LONG FLAG = 0 la chay xong check_mn(), = 1 la dang chay
-char flag_accu = 0;  // TODO: reuse this for broken accu flag
+char flag_error_dau_noi_accu = 0;
+char flag_error_broken_accu = 0;
 
 unsigned long counter_timer0 = 0;
 char flag_timer_chay_lien_tuc_60s = 60, flag_timer_chay_lien_tuc_60p = 60;
@@ -62,6 +64,7 @@ void reset_timer_data(void);
 void write_data(void);
 void read_data(void);
 void get_adc_accu(void);
+void verify_dc(void);
 
 unsigned char read_eeprom(unsigned char addr);
 void write_eeprom(unsigned char addr, unsigned char value);
@@ -92,12 +95,10 @@ void main()
    {
       disable_reset();
       restart_wdt();
-      // DIEU HOA TRANG THAI: Tinh nang chinh - nhap menu
       switch (mode)
       {
       case 0: // TINH NANG CHINH
          check_AC();
-         get_adc_accu();
 
          switch (state_AC)
          {
@@ -105,13 +106,29 @@ void main()
             break;
 
          case 1: // co AC -> hien thi LCD
+            verify_dc();
             reset_timer_data();
             output_low(out_fire);
             output_low(out_delay);
             break;
          case 2: // mat AC: phong accu
             output_high(out_delay);
-            if (adc_accu > 10 && adc_accu <= input_dc_lv2 - delta_dc)
+            verify_dc();
+            if (flag_error_dau_noi_accu)
+            {
+               output_low(out_fire);
+               output_high(out_temp);
+               output_high(out_error);
+               output_low(out_delay);
+            }
+            else if (flag_error_broken_accu)
+            {
+               val_timer_chay_lien_tuc = 24;
+               output_high(out_temp);
+               output_high(out_error);
+               state_AC = 3;
+            }
+            else if (adc_accu > DC_LOW_LVL_2 && adc_accu <= input_dc_lv2 - delta_dc)
             {
                state_AC = 3;
             }
@@ -154,14 +171,14 @@ void main()
             }
             else if (val_counter_restart_mpd > counter_restart_mpd_current)
             {
-               state_AC = 10; // error
+               state_AC = 10; // Mpd error
             }
             break;
          case 4: // DELAY 2 + OFF REMOTE START
             char mn = check_mn();
             if (mn == 0)
             {
-               state_AC = 10; // error
+               state_AC = 10; // Mpd error
                break;
             }
             // OFF REMOTE START
@@ -176,7 +193,7 @@ void main()
                reset_timer_data();
             }
             break;
-         case 10: // error
+         case 10: // Mpd error
             flag_error = 1;
             write_data(); // Luu flag_error = 1
             output_low(out_fire);
@@ -309,7 +326,26 @@ void init_data(void)
    delta_dc_md = 0.2;
    adc_accu = 0;
 
-   flag_accu = 0;
+   flag_error_dau_noi_accu = 0;
+   flag_error_broken_accu = 0;
+}
+
+void verify_dc(void)
+{
+   get_adc_accu();
+   if (adc_accu <= DC_LOW_LVL_2)
+   {
+      flag_error_dau_noi_accu = 1;
+   }
+   else if (adc_accu <= input_dc_lv2 - delta_dc)
+   {
+      delay_ms(500);
+      get_adc_accu();
+      if (adc_accu <= DC_LOW_LVL_2)
+      {
+         flag_error_broken_accu = 1;
+      }
+   }
 }
 
 void get_adc_accu(void)
@@ -322,14 +358,6 @@ void get_adc_accu(void)
       adc_accu = adc_temp > adc_accu ? adc_temp : adc_accu;
    }
    adc_accu = (adc_accu - 19) * (52.9 / 869) + 1.1;
-   if (adc_accu < 10)
-   {
-      flag_accu = 1;
-   }
-   else
-   {
-      flag_accu = 0;
-   }
 }
 
 char check_mn(void)
@@ -387,12 +415,20 @@ void display(char code_print)
       LCD_PUTCMD(Line_1);
       PRINTF(LCD_PUTCHAR, "DIEN AP ACCU");
       clear_lcd();
-      if (flag_accu)
+      if (flag_error_dau_noi_accu)
       {
          LCD_PUTCMD(Line_2);
          clear_lcd();
          LCD_PUTCMD(Line_2);
          PRINTF(LCD_PUTCHAR, "DC:DAU NOI ACCU!");
+         clear_lcd();
+      }
+      else if (flag_error_broken_accu)
+      {
+         LCD_PUTCMD(Line_2);
+         clear_lcd();
+         LCD_PUTCMD(Line_2);
+         PRINTF(LCD_PUTCHAR, "DC:ACCU HONG!");
          clear_lcd();
       }
       else
@@ -424,13 +460,30 @@ void display(char code_print)
       LCD_PUTCMD(Line_1);
       PRINTF(LCD_PUTCHAR, "D.AP AC BTHUONG");
       clear_lcd();
-      if (flag_accu)
+      if (flag_error_dau_noi_accu)
       {
          LCD_PUTCMD(Line_2);
          clear_lcd();
          LCD_PUTCMD(Line_2);
          PRINTF(LCD_PUTCHAR, "DC:DAU NOI ACCU!");
          clear_lcd();
+      }
+      else if (flag_error_broken_accu)
+      {
+         if (flag_error)
+         {
+            LCD_PUTCMD(Line_2);
+            clear_lcd();
+            LCD_PUTCMD(Line_2);
+            PRINTF(LCD_PUTCHAR, "DC:ACCU HONG! MPD LOI", adc_accu);
+            clear_lcd();
+         }
+         else
+         {
+            LCD_PUTCMD(Line_2);
+            PRINTF(LCD_PUTCHAR, "DC:ACCU HONG! MPD TOT", adc_accu);
+            clear_lcd();
+         }
       }
       else if (flag_error)
       {
@@ -579,7 +632,7 @@ void reset_timer_data(void)
 {
    val_counter_restart_mpd = 1;
    counter_restart_mpd_current = counter_restart_mpd;
-   val_timer_chay_lien_tuc = timer_chay_lien_tuc;
+   val_timer_chay_lien_tuc = flag_error_broken_accu ? 24 : timer_chay_lien_tuc;
    val_timer_on_mpd = timer_on_mpd;
    val_timer_off_mpd = timer_off_mpd;
    val_timer_ktra_mn = timer_ktra_mn;

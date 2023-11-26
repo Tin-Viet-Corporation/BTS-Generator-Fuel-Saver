@@ -22,6 +22,4 @@
 #define out_mn PIN_B6
 #define out_ac PIN_B7
 
-#define size_pass 5
-
 #endif
