@@ -475,13 +475,13 @@ void display(char code_print)
             LCD_PUTCMD(Line_2);
             clear_lcd();
             LCD_PUTCMD(Line_2);
-            PRINTF(LCD_PUTCHAR, "DC:ACCU HONG! MPD LOI", adc_accu);
+            PRINTF(LCD_PUTCHAR, "DC:ACCU HONG! MPD LOI");
             clear_lcd();
          }
          else
          {
             LCD_PUTCMD(Line_2);
-            PRINTF(LCD_PUTCHAR, "DC:ACCU HONG! MPD TOT", adc_accu);
+            PRINTF(LCD_PUTCHAR, "DC:ACCU HONG! MPD TOT");
             clear_lcd();
          }
       }
