@@ -335,7 +335,7 @@ void verify_dc(void)
    get_adc_accu();
    if (adc_accu <= DC_LOW_LVL_2)
    {
-      flag_error_dau_noi_accu = 1;
+      // flag_error_dau_noi_accu = 1;
    }
    else if (adc_accu <= input_dc_lv2 - delta_dc)
    {
