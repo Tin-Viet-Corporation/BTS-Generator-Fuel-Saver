@@ -111,7 +111,7 @@ void main()
             output_low(out_delay);
             break;
          case 2: // mat AC: phong accu
-            else if (flag_error_broken_accu || (adc_accu > DC_LOW_LVL_2 && adc_accu <= input_dc_lv2 - delta_dc))
+            if (flag_error_broken_accu || (adc_accu > DC_LOW_LVL_2 && adc_accu <= input_dc_lv2 - delta_dc))
             {
                state_AC = 3;
             }
