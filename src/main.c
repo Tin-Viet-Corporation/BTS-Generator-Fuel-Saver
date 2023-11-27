@@ -492,14 +492,10 @@ void default_data(void)
    input_dc_lv2 = input_dc_lv2_md;
    delta_dc = delta_dc_md;
    counter_restart_mpd = counter_restart_mpd_md; // LONG SO LAN KHOI DONG LAI MPD
-   // TODO uncomment this
-   // timer_chay_lien_tuc = timer_chay_lien_tuc_md; // LONG DELAY 2
-   timer_chay_lien_tuc = 0;
-   // TODO uncomment this
-   // timer_ktra_AC = timer_ktra_AC_md; // LONG KT AC TIMER
-   timer_ktra_AC = 10;
-   timer_ktra_mn = timer_ktra_mn_md; // LONG KT MN TIMER
-   flag_error = 0;                   // LONG FLAG = 0 la ko loi, = 1 la LOI
+   timer_chay_lien_tuc = timer_chay_lien_tuc_md; // LONG DELAY 2
+   timer_ktra_AC = timer_ktra_AC_md;             // LONG KT AC TIMER
+   timer_ktra_mn = timer_ktra_mn_md;             // LONG KT MN TIMER
+   flag_error = 0;                               // LONG FLAG = 0 la ko loi, = 1 la LOI
 }
 void display_center(void)
 {
@@ -608,8 +604,7 @@ void reset_timer_data(void)
    val_timer_off_mpd = timer_off_mpd;
    val_timer_ktra_mn = timer_ktra_mn;
    state_mn = 0;
-   // TODO: reset back to 0
-   flag_timer_chay_lien_tuc_60s = 10, flag_timer_chay_lien_tuc_60p = 0;
+   flag_timer_chay_lien_tuc_60s = 0, flag_timer_chay_lien_tuc_60p = 0;
 }
 
 void lcd_printf(char code_printf)
@@ -955,9 +950,7 @@ void read_data(void)
    input_dc_lv2 = input_dc_lv2 / 10;
    delta_dc = ree16(delta_dc_ee);
    delta_dc = delta_dc / 10;
-   // TODO uncomment this
-   // timer_chay_lien_tuc = ree(timer_chay_lien_tuc_ee);
-   timer_chay_lien_tuc = 0;
+   timer_chay_lien_tuc = ree(timer_chay_lien_tuc_ee);
    timer_ktra_mn = ree(timer_ktra_mn_ee);
    timer_ktra_AC = ree(timer_ktra_AC_ee);
    counter_restart_mpd = ree(counter_restart_mpd_ee);
