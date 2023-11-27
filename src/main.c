@@ -111,7 +111,12 @@ void main()
             output_low(out_delay);
             break;
          case 2: // mat AC: phong accu
-            if (flag_error_broken_accu || (adc_accu > DC_LOW_LVL_2 && adc_accu <= input_dc_lv2 - delta_dc))
+            if (flag_error_broken_accu)
+            {
+               val_timer_chay_lien_tuc = 24;
+               state_AC = 3;
+            }
+            else if (adc_accu > DC_LOW_LVL_2 && adc_accu <= input_dc_lv2 - delta_dc)
             {
                state_AC = 3;
             }
@@ -319,7 +324,6 @@ void verify_dc(void)
    if (adc_accu <= DC_LOW_LVL_2)
    {
       flag_error_broken_accu = 1;
-      val_timer_chay_lien_tuc = 24;
       output_high(out_temp);
       output_high(out_error);
    }
