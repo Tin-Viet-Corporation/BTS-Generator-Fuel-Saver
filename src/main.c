@@ -175,7 +175,6 @@ void main()
             {
                output_low(out_fire);
                flag_error = 0;
-               write_data(); // Cap nhat flag_error = 0
                output_low(out_temp);
                output_low(out_error);
                state_AC = 2;
@@ -184,7 +183,6 @@ void main()
             break;
          case 10: // Mpd error
             flag_error = 1;
-            write_data(); // Luu flag_error = 1
             output_low(out_fire);
             output_high(out_temp);
             output_high(out_error);
@@ -316,6 +314,7 @@ void init_data(void)
    adc_accu = 0;
 
    flag_error_broken_accu = 0;
+   flag_error = 0;
 }
 
 void verify_dc(void)
@@ -940,7 +939,6 @@ void write_data(void)
    wee(timer_ktra_mn_ee, timer_ktra_mn);
    wee(timer_ktra_AC_ee, timer_ktra_AC);
    wee(counter_restart_mpd_ee, counter_restart_mpd);
-   wee(flag_error_ee, flag_error);
 }
 
 //=========================
@@ -954,7 +952,6 @@ void read_data(void)
    timer_ktra_mn = ree(timer_ktra_mn_ee);
    timer_ktra_AC = ree(timer_ktra_AC_ee);
    counter_restart_mpd = ree(counter_restart_mpd_ee);
-   flag_error = ree(flag_error_ee);
 }
 
 void disable_reset(void)
