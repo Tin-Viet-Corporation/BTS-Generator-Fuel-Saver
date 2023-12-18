@@ -107,8 +107,7 @@ void main()
 
          case 1: // co AC -> hien thi LCD
             reset_timer_data();
-            output_low(out_fire);
-            output_low(out_delay);
+            output_low(out_fuel);
             break;
          case 2: // mat AC: phong accu
             if (flag_error_broken_accu)
@@ -122,14 +121,13 @@ void main()
             }
             break;
          case 3: // mat AC: DO DIEN AP MPD
-            output_high(out_delay);
             if (val_counter_restart_mpd <= counter_restart_mpd_current)
             {
                display(chay_mpd);
                switch (state_mn)
                {
                case 0: // on remote start delay
-                  output_high(out_fire);
+                  output_high(out_fuel);
                   if (val_timer_on_mpd <= 0)
                   {
                      state_mn = 1;
@@ -148,7 +146,7 @@ void main()
                   }
                   break;
                case 2: // off remote start delay
-                  output_low(out_fire);
+                  output_low(out_fuel);
                   if (val_timer_off_mpd <= 0)
                   {
                      state_mn = 0;
@@ -173,9 +171,8 @@ void main()
             // OFF REMOTE START
             if (val_timer_chay_lien_tuc <= 0 && flag_timer_chay_lien_tuc_60p <= 0 && flag_timer_chay_lien_tuc_60s <= 0)
             {
-               output_low(out_fire);
+               output_low(out_fuel);
                flag_error = 0;
-               output_low(out_temp);
                output_low(out_error);
                state_AC = 2;
                reset_timer_data();
@@ -183,10 +180,8 @@ void main()
             break;
          case 10: // Mpd error
             flag_error = 1;
-            output_low(out_fire);
-            output_high(out_temp);
+            output_low(out_fuel);
             output_high(out_error);
-            output_low(out_delay);
             break;
          }
          break;
@@ -323,7 +318,6 @@ void verify_dc(void)
    if (adc_accu <= DC_LOW_LVL_2)
    {
       flag_error_broken_accu = 1;
-      output_high(out_temp);
       output_high(out_error);
    }
 }
