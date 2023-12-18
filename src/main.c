@@ -111,6 +111,7 @@ void main()
             output_high(out_kdt_ac);
             break;
          case 2: // mat AC: phong accu
+            output_low(out_kdt_ac);
             if (flag_error_broken_accu)
             {
                val_timer_chay_lien_tuc = 24;
