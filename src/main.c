@@ -108,6 +108,7 @@ void main()
          case 1: // co AC -> hien thi LCD
             reset_timer_data();
             output_low(out_fuel);
+            output_high(out_kdt_ac);
             break;
          case 2: // mat AC: phong accu
             if (flag_error_broken_accu)
