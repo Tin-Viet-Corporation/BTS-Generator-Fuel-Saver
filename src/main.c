@@ -87,8 +87,8 @@ void main()
    set_timer0(62536); //(24000000/128)/(65535-65160)=187500/375=500us
    lcd_init();        // khoi dong mang hinh lcd
    backlight_on();
-   init_data();
    read_data();
+   init_data();
    // CHUONG TRINH CHINH
    while (1)
    {
