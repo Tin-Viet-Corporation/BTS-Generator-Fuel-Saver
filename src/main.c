@@ -176,6 +176,7 @@ void main()
                output_low(out_fuel);
                flag_error = 0;
                output_low(out_error);
+               output_low(out_error_led);
                state_AC = 2;
                reset_timer_data();
             }
@@ -184,6 +185,7 @@ void main()
             flag_error = 1;
             output_low(out_fuel);
             output_high(out_error);
+            output_high(out_error_led);
             output_low(out_delay);
             break;
          }
@@ -322,6 +324,7 @@ void verify_dc(void)
    {
       flag_error_broken_accu = 1;
       output_high(out_error);
+      output_high(out_error_led);
    }
 }
 
