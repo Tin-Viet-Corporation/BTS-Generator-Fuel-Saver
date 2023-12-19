@@ -18,7 +18,7 @@
 #define out_fuel PIN_B2
 #define out_error PIN_B3
 #define out_kdt_ac PIN_B5
-#define out_kdt_mpd PIN_B4
+#define out_delay PIN_B4
 #define out_start PIN_B6
 #define out_ac PIN_B7
 
