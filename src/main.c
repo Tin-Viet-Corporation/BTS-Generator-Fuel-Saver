@@ -88,8 +88,6 @@ void main()
    lcd_init();        // khoi dong mang hinh lcd
    backlight_on();
    init_data();
-   default_data();
-   write_data();
    read_data();
    // CHUONG TRINH CHINH
    while (1)
