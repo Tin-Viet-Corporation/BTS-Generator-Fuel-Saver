@@ -183,7 +183,6 @@ void main()
          case 10: // Mpd error
             flag_error = 1;
             output_low(out_fuel);
-            output_high(out_error);
             break;
          }
          break;
