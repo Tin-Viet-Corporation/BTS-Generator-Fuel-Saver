@@ -16,9 +16,9 @@
 #define cb_ac PIN_C3
 
 #define out_fuel PIN_B2
-#define out_error PIN_B3
-#define out_error_led PIN_B5
-#define out_delay PIN_B4
+#define out_accu_error PIN_B3
+#define out_mpd_error_led PIN_B5
+#define out_gen_active PIN_B4
 #define out_start PIN_B6
 #define out_ac PIN_B7
 

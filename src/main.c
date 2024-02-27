@@ -108,7 +108,7 @@ void main()
          case 1: // co AC -> hien thi LCD
             reset_timer_data();
             output_low(out_fuel);
-            output_low(out_delay);
+            output_low(out_gen_active);
             break;
          case 2: // mat AC: phong accu
             if (flag_error_broken_accu)
@@ -122,7 +122,7 @@ void main()
             }
             break;
          case 3: // mat AC: DO DIEN AP MPD
-            output_high(out_delay);
+            output_high(out_gen_active);
             if (val_counter_restart_mpd <= counter_restart_mpd_current)
             {
                display(chay_mpd);
@@ -174,9 +174,9 @@ void main()
             if (val_timer_chay_lien_tuc <= 0 && flag_timer_chay_lien_tuc_60p <= 0 && flag_timer_chay_lien_tuc_60s <= 0)
             {
                output_low(out_fuel);
+               output_low(out_gen_active);
                flag_error = 0;
-               output_low(out_error);
-               output_low(out_error_led);
+               output_low(out_mpd_error_led);
                state_AC = 2;
                reset_timer_data();
             }
@@ -184,9 +184,8 @@ void main()
          case 10: // Mpd error
             flag_error = 1;
             output_low(out_fuel);
-            output_high(out_error);
-            output_high(out_error_led);
-            output_low(out_delay);
+            output_high(out_mpd_error_led);
+            output_low(out_gen_active);
             break;
          }
          break;
@@ -323,8 +322,7 @@ void verify_dc(void)
    if (adc_accu <= DC_LOW_LVL_2)
    {
       flag_error_broken_accu = 1;
-      output_high(out_error);
-      output_high(out_error_led);
+      output_high(out_accu_error);
    }
 }
 
