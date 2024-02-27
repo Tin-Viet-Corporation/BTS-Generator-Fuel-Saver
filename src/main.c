@@ -107,11 +107,9 @@ void main()
 
          case 1: // co AC -> hien thi LCD
             reset_timer_data();
-            output_low(out_fuel);
-            output_high(out_kdt_ac);
+            output_low(out_gen_active);
             break;
          case 2: // mat AC: phong accu
-            output_low(out_kdt_ac);
             if (flag_error_broken_accu)
             {
                val_timer_chay_lien_tuc = 24;
@@ -126,10 +124,10 @@ void main()
             if (val_counter_restart_mpd <= counter_restart_mpd_current)
             {
                display(chay_mpd);
+               output_high(out_gen_active);
                switch (state_mn)
                {
                case 0: // on remote start delay
-                  output_high(out_fuel);
                   if (val_timer_on_mpd <= 0)
                   {
                      state_mn = 1;
@@ -148,7 +146,6 @@ void main()
                   }
                   break;
                case 2: // off remote start delay
-                  output_low(out_fuel);
                   if (val_timer_off_mpd <= 0)
                   {
                      state_mn = 0;
@@ -173,16 +170,17 @@ void main()
             // OFF REMOTE START
             if (val_timer_chay_lien_tuc <= 0 && flag_timer_chay_lien_tuc_60p <= 0 && flag_timer_chay_lien_tuc_60s <= 0)
             {
-               output_low(out_fuel);
                flag_error = 0;
-               output_low(out_error);
+               output_low(out_gen_fail);
+               output_low(out_gen_active);
                state_AC = 2;
                reset_timer_data();
             }
             break;
          case 10: // Mpd error
             flag_error = 1;
-            output_low(out_fuel);
+            output_high(out_gen_fail);
+            output_low(out_gen_active);
             break;
          }
          break;
@@ -292,7 +290,7 @@ void init_data(void)
 
    val_counter_restart_mpd = 1, counter_restart_mpd_current = counter_restart_mpd, counter_restart_mpd_md = 4; // LONG SO LAN KHOI DONG LAI MPD
    val_timer_chay_lien_tuc = timer_chay_lien_tuc, timer_chay_lien_tuc_md = 3;                                  // LONG DELAY 2
-   val_timer_ktra_AC = timer_ktra_AC, timer_ktra_AC_md = 10;                                                   // TODO revert md to 60                                                 // LONG KT AC TIMER
+   val_timer_ktra_AC = timer_ktra_AC, timer_ktra_AC_md = 60;                                                   // TODO revert md to 60                                                 // LONG KT AC TIMER
    flag_mn = 0;
    val_timer_ktra_mn = timer_ktra_mn, timer_ktra_mn_md = 30; // LONG KT MN TIMER
    val_timer_on_mpd = 20, timer_on_mpd = 20;
@@ -319,7 +317,7 @@ void verify_dc(void)
    if (adc_accu <= DC_LOW_LVL_2)
    {
       flag_error_broken_accu = 1;
-      output_high(out_error);
+      output_high(out_accu_error);
    }
 }
 
