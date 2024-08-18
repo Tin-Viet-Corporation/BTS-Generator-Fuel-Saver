@@ -42,7 +42,7 @@ char flag_timer_chay_lien_tuc_60s = 60, flag_timer_chay_lien_tuc_60p = 60;
 char pwm_lcd = 0;
 char sum_out = 0, sum_out_old = 0, loop_not_display = 0;
 
-float input_dc_lv2 = 47, input_dc_lv2_md = 47;
+float input_dc_lv2 = 47.5, input_dc_lv2_md = 47.5;
 float delta_dc = 0.2, delta_dc_md = 0.2;
 float adc_accu = 0;
 
@@ -308,7 +308,7 @@ void init_data(void)
    pwm_lcd = 0;
    sum_out = 0, sum_out_old = 0, loop_not_display = 0;
 
-   input_dc_lv2_md = 47;
+   input_dc_lv2_md = 47.5;
    delta_dc_md = 0.2;
    adc_accu = 0;
 
