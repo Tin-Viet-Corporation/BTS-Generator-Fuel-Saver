@@ -3,6 +3,7 @@
 #include "./headers/eeprom.h"
 #include "./headers/display.h"
 #include "./headers/const.h"
+#include "./headers/utilsDC.h"
 
 unsigned char val_number_default[11] = {"0123456789"};
 // con tro phuc vu cai dat
@@ -35,6 +36,7 @@ char val_loading = 0;
 char flag_error = 0; // LONG FLAG = 0 la ko loi, = 1 la LOI
 char flag_mn = 0;    // LONG FLAG = 0 la chay xong check_mn(), = 1 la dang chay
 char flag_error_broken_accu = 0;
+char flag_unstable_AC = 0;
 
 unsigned long counter_timer0 = 0;
 char flag_timer_chay_lien_tuc_60s = 60, flag_timer_chay_lien_tuc_60p = 60;
@@ -97,8 +99,8 @@ void main()
       switch (mode)
       {
       case 0: // TINH NANG CHINH
-         check_AC();
          verify_dc();
+         check_AC();
 
          switch (state_AC)
          {
@@ -111,12 +113,20 @@ void main()
             output_low(out_gen_active);
             break;
          case 2: // mat AC: phong accu
+            reset_timer_data();
+            output_low(out_fuel);
+            output_low(out_gen_active);
             if (flag_error_broken_accu)
             {
                val_timer_chay_lien_tuc = 24;
                state_AC = 3;
             }
-            else if (adc_accu > DC_LOW_LVL_2 && adc_accu <= input_dc_lv2 - delta_dc)
+            else if (flag_unstable_AC)
+            {
+               val_timer_chay_lien_tuc = 1;
+               state_AC = 3;
+            }
+            else if (adc_accu > DC_LOW_LVL_2 && isBelowDCLowLv1(adc_accu, input_dc_lv2, delta_dc))
             {
                state_AC = 3;
             }
@@ -177,7 +187,15 @@ void main()
                output_low(out_gen_active);
                flag_error = 0;
                output_low(out_mpd_error_led);
-               state_AC = 2;
+               if (flag_unstable_AC)
+               {
+                  flag_unstable_AC = 0;
+                  state_AC = 1;
+               }
+               else
+               {
+                  state_AC = 2;
+               }
                reset_timer_data();
             }
             break;
@@ -313,6 +331,7 @@ void init_data(void)
    adc_accu = 0;
 
    flag_error_broken_accu = 0;
+   flag_unstable_AC = 0;
    flag_error = 0;
 }
 
@@ -357,19 +376,20 @@ char check_mn(void)
 }
 void check_AC(void)
 {
-   if (state_AC <= 1 && (!(status_AC())))
+   if ((state_AC <= 1 || flag_unstable_AC) && !status_AC())
    {
       state_AC = 0; // chay trang thai dem do AC
       if (val_timer_ktra_AC <= 0)
       {
-         if (!(status_AC()))
+         if (!status_AC())
          {
             state_AC = 2;
+            flag_unstable_AC = 0;
          }
          val_timer_ktra_AC = timer_ktra_AC;
       }
    }
-   else if (state_AC != 1 && (status_AC()))
+   else if (state_AC != 1 && status_AC() && !flag_unstable_AC)
    {
       state_AC = 0; // chay trang thai dem do AC
       if (val_timer_ktra_AC <= 0)
@@ -380,6 +400,11 @@ void check_AC(void)
          }
          val_timer_ktra_AC = timer_ktra_AC;
       }
+   }
+   else if (state_AC == 1 && isBelowDCLowLv1(adc_accu, input_dc_lv2, delta_dc))
+   {
+      flag_unstable_AC = 1;
+      state_AC = 2;
    }
 }
 
