@@ -336,8 +336,6 @@ void init_data(void)
 void verify_dc(void)
 {
    get_adc_accu();
-   delay_ms(1);
-   get_adc_accu();
    if (adc_accu <= DC_LOW_LVL_2)
    {
       flag_error_broken_accu = 1;
@@ -403,703 +401,710 @@ void check_AC(void)
    }
    else if (state_AC == 1 && isBelowDCLowLv1AndAboveLv2(adc_accu, input_dc_lv2, delta_dc))
    {
-      flag_unstable_AC = 1;
-      state_AC = 2;
+      state_AC = 0;
+      if (val_timer_ktra_AC <= 0)
+      {
+         if (isBelowDCLowLv1AndAboveLv2(adc_accu, input_dc_lv2, delta_dc))
+         {
+            flag_unstable_AC = 1;
+            state_AC = 2;
+         }
+         val_timer_ktra_AC = timer_ktra_AC;
+      }
    }
-}
 
-void display(char code_print)
-{
-   switch (code_print)
+   void display(char code_print)
    {
-   case 0: // ko in
-      break;
-   case 1: // phong_accu
-      LCD_PUTCMD(Line_1);
-      PRINTF(LCD_PUTCHAR, "DIEN AP ACCU");
-      clear_lcd();
-      if (flag_error_broken_accu)
+      switch (code_print)
       {
-         LCD_PUTCMD(Line_2);
+      case 0: // ko in
+         break;
+      case 1: // phong_accu
+         LCD_PUTCMD(Line_1);
+         PRINTF(LCD_PUTCHAR, "DIEN AP ACCU");
          clear_lcd();
-         LCD_PUTCMD(Line_2);
-         PRINTF(LCD_PUTCHAR, "DC:ACCU LOI!");
-         clear_lcd();
-      }
-      else
-      {
-         LCD_PUTCMD(Line_2);
-         clear_lcd();
-         LCD_PUTCMD(Line_2);
-         PRINTF(LCD_PUTCHAR, "DC:%02.1fV", adc_accu);
-         clear_lcd();
-      }
-      break;
-   case 2: // delay 2
-      LCD_PUTCMD(Line_1);
-      PRINTF(LCD_PUTCHAR, "TG CHAY LIEN TUC");
-      clear_lcd();
-      LCD_PUTCMD(Line_2);
-      PRINTF(LCD_PUTCHAR, "%02u:%02u:%02u", val_timer_chay_lien_tuc, flag_timer_chay_lien_tuc_60p, flag_timer_chay_lien_tuc_60s);
-      clear_lcd();
-      break;
-   case 4: // Do AC
-      LCD_PUTCMD(Line_1);
-      PRINTF(LCD_PUTCHAR, "KIEM TRA AC");
-      clear_lcd();
-      LCD_PUTCMD(Line_2);
-      PRINTF(LCD_PUTCHAR, "00:%02u:%02u", sec_to_minute(val_timer_ktra_AC), sec_to_sec(val_timer_ktra_AC));
-      clear_lcd();
-      break;
-   case 5: // AC BINH THUONG
-      LCD_PUTCMD(Line_1);
-      PRINTF(LCD_PUTCHAR, "D.AP AC BTHUONG");
-      clear_lcd();
-      if (flag_error_broken_accu)
-      {
-         if (flag_error)
+         if (flag_error_broken_accu)
          {
             LCD_PUTCMD(Line_2);
             clear_lcd();
             LCD_PUTCMD(Line_2);
-            PRINTF(LCD_PUTCHAR, "ACCU LOI MPD LOI");
+            PRINTF(LCD_PUTCHAR, "DC:ACCU LOI!");
             clear_lcd();
          }
          else
          {
             LCD_PUTCMD(Line_2);
-            PRINTF(LCD_PUTCHAR, "ACCU LOI MPD TOT");
+            clear_lcd();
+            LCD_PUTCMD(Line_2);
+            PRINTF(LCD_PUTCHAR, "DC:%02.1fV", adc_accu);
             clear_lcd();
          }
-      }
-      else if (flag_error)
-      {
-         LCD_PUTCMD(Line_2);
+         break;
+      case 2: // delay 2
+         LCD_PUTCMD(Line_1);
+         PRINTF(LCD_PUTCHAR, "TG CHAY LIEN TUC");
          clear_lcd();
          LCD_PUTCMD(Line_2);
-         PRINTF(LCD_PUTCHAR, "DC:%02.1fV MPD LOI", adc_accu);
+         PRINTF(LCD_PUTCHAR, "%02u:%02u:%02u", val_timer_chay_lien_tuc, flag_timer_chay_lien_tuc_60p, flag_timer_chay_lien_tuc_60s);
          clear_lcd();
-      }
-      else
-      {
+         break;
+      case 4: // Do AC
+         LCD_PUTCMD(Line_1);
+         PRINTF(LCD_PUTCHAR, "KIEM TRA AC");
+         clear_lcd();
          LCD_PUTCMD(Line_2);
-         PRINTF(LCD_PUTCHAR, "DC:%02.1fV MPD TOT", adc_accu);
+         PRINTF(LCD_PUTCHAR, "00:%02u:%02u", sec_to_minute(val_timer_ktra_AC), sec_to_sec(val_timer_ktra_AC));
          clear_lcd();
-      }
-      break;
-   case 6: // CHAY MPD
-      LCD_PUTCMD(Line_1);
-      PRINTF(LCD_PUTCHAR, "CHAY MPD");
-      clear_lcd();
-      LCD_PUTCMD(Line_2);
-      PRINTF(LCD_PUTCHAR, "LAN: %01u", val_counter_restart_mpd);
-      clear_lcd();
-      break;
-   case 7: // error
-      LCD_PUTCMD(Line_1);
-      PRINTF(LCD_PUTCHAR, "MPD LOI");
-      clear_lcd();
-      LCD_PUTCMD(Line_2);
-      if (flag_error_broken_accu)
-      {
-         PRINTF(LCD_PUTCHAR, "ACCU LOI");
-      }
-      clear_lcd();
-      break;
-   }
-}
-
-void default_data(void)
-{
-   input_dc_lv2 = input_dc_lv2_md;
-   delta_dc = delta_dc_md;
-   counter_restart_mpd = counter_restart_mpd_md; // LONG SO LAN KHOI DONG LAI MPD
-   timer_chay_lien_tuc = timer_chay_lien_tuc_md; // LONG DELAY 2
-   timer_ktra_AC = timer_ktra_AC_md;             // LONG KT AC TIMER
-   timer_ktra_mn = timer_ktra_mn_md;             // LONG KT MN TIMER
-   flag_error = 0;                               // LONG FLAG = 0 la ko loi, = 1 la LOI
-}
-void display_center(void)
-{
-   unsigned char menu_main[10][17] = {{""},
-                                      {"MAT KHAU !"},
-                                      {"DIEN AP DC LOW"},
-                                      {"TG CHAY LIEN TUC"},
-                                      {"DELTA D.A DC LOW"},
-                                      {"TG KTRA D.AP AC"},
-                                      {"TG KTRA D.AP MPD"},
-                                      {"SO LAN KHOI DONG"},
-                                      {"CAI DAT MAC DINH"},
-                                      {""}};
-
-   if (refresh_menu)
-   {
-      LCD_PUTCMD(Line_1); // Dua hien thi chu dau dong hang` duoi
-      PRINTF(LCD_PUTCHAR, "%s", menu_main[mode]);
-      clear_lcd();
-   }
-   LCD_PUTCMD(Line_2); // Dua hien thi chu dau dong hang` duoi
-
-   switch (mode)
-   {
-   case 0: // LCD TINH NANG CHINH
-      switch (state_AC)
-      {
-      case 0:
-         display(do_ac);
          break;
-      case 1:
-         display(ac_bthg);
-         break;
-      case 2:
-         display(phong_accu);
-         break;
-      case 3:
-         break;
-      case 4:
-         display(tg_chay_lien_tuc);
-         break;
-      case 10:
-         display(error);
-         break;
-      }
-      break;
-   case 1:                // nhap mat khau
-      LCD_PUTCMD(Line_2); // Dua hien thi chu dau dong hang` duoi
-      sch_1 = str_temp;
-      sch_1_s_set();
-      break;
-
-   case 2:                // DIEN AP DC LOW
-      LCD_PUTCMD(Line_2); // Dua hien thi chu dau dong hang` duoi
-      PRINTF(LCD_PUTCHAR, "VOLT DC: <%02.1f>", input_dc_lv2);
-      clear_lcd();
-      break;
-
-   case 3:                // TG CHAY LIEN TUC
-      LCD_PUTCMD(Line_2); // Dua hien thi chu dau dong hang` duoi
-      PRINTF(LCD_PUTCHAR, "GIO: <%01u>", timer_chay_lien_tuc);
-      clear_lcd();
-      break;
-
-   case 4:                // DELTA D.A DC LOW
-      LCD_PUTCMD(Line_2); // Dua hien thi chu dau dong hang` duoi
-      PRINTF(LCD_PUTCHAR, "VOLT DC: <%02.1f>", delta_dc);
-      clear_lcd();
-      break;
-   case 5:                // TG KTRA DA AC
-      LCD_PUTCMD(Line_2); // Dua hien thi chu dau dong hang` duoi
-      PRINTF(LCD_PUTCHAR, "GIAY: <%01u>", timer_ktra_AC);
-      clear_lcd();
-      break;
-   case 6:                // TG KTRA DA MN
-      LCD_PUTCMD(Line_2); // Dua hien thi chu dau dong hang` duoi
-      PRINTF(LCD_PUTCHAR, "GIAY: <%01u>", timer_ktra_mn);
-      clear_lcd();
-      break;
-   case 7:                // SO LAN KHOI DONG
-      LCD_PUTCMD(Line_2); // Dua hien thi chu dau dong hang` duoi
-      PRINTF(LCD_PUTCHAR, "LAN: <%01u>", counter_restart_mpd);
-      clear_lcd();
-      break;
-   case 8: // cai dat mat dinh
-      yesno();
-      break;
-   case 9:
-      LCD_PUTCMD(Line_1);
-      loading();
-      clear_lcd();
-      LCD_PUTCMD(Line_2);
-      clear_lcd();
-      break;
-   }
-   refresh_menu = 0; // cap nhat du lieu mang hinh xong
-}
-
-//=========================
-void reset_timer_data(void)
-{
-   val_counter_restart_mpd = 1;
-   counter_restart_mpd_current = counter_restart_mpd;
-   val_timer_chay_lien_tuc = flag_error_broken_accu ? 24 : timer_chay_lien_tuc;
-   val_timer_on_mpd = timer_on_mpd;
-   val_timer_off_mpd = timer_off_mpd;
-   val_timer_ktra_mn = timer_ktra_mn;
-   state_mn = 0;
-   flag_timer_chay_lien_tuc_60s = 0, flag_timer_chay_lien_tuc_60p = 0;
-}
-
-void lcd_printf(char code_printf)
-{
-   switch (code_printf)
-   {
-   case 0:
-      PRINTF(LCD_PUTCHAR, "                 ");
-      break;
-
-   case 9:
-      PRINTF(LCD_PUTCHAR, "  <YES || NO>");
-      break;
-
-   case 10:
-
-      if (++val_loading > 5)
-      {
-         val_loading = 0;
-         mode = 0;
-      }
-      PRINTF(LCD_PUTCHAR, "Loading ");
-      switch (val_loading)
-      {
-      case 0:
-         PRINTF(LCD_PUTCHAR, ".  ");
-         break;
-
-      case 1:
-         PRINTF(LCD_PUTCHAR, ".. ");
-         break;
-
-      case 2:
-         PRINTF(LCD_PUTCHAR, "...");
-         break;
-
-      case 3:
-         PRINTF(LCD_PUTCHAR, " ..");
-         break;
-
-      case 4:
-         PRINTF(LCD_PUTCHAR, "  .");
-         break;
-
-      case 5:
-         PRINTF(LCD_PUTCHAR, "   ");
-         break;
-      }
-      break;
-
-   case 11:
-      PRINTF(LCD_PUTCHAR, "%s<", sch_1);
-      break;
-   }
-}
-//=======================================
-char key_scan(void)
-{
-   unsigned long bounce = 200;
-
-   if (val_mode() == 1)
-   {
-      while (bounce--)
-      {
-         if (val_mode() == 0)
-            return 0x00;
-      }
-      bounce = 1024;
-      while (bounce--)
-      {
-         if (val_mode() == 0)
-            return 0x01;
-      }
-      return 0x01;
-   }
-
-   else if (val_up() == 1)
-   {
-      while (bounce--)
-      {
-         if (val_up() == 0)
-            return 0x00;
-      }
-      bounce = 256;
-      while (bounce--)
-      {
-         if (val_up() == 0)
-            return 0x02;
-      }
-      return 0x02;
-   }
-
-   else if (val_down() == 1)
-   {
-      while (bounce--)
-      {
-         if (val_down() == 0)
-            return 0x00;
-      }
-      bounce = 256;
-      while (bounce--)
-      {
-         if (val_down() == 0)
-            return 0x03;
-      }
-      return 0x03;
-   }
-
-   else if (val_exit() == 1)
-   {
-      while (bounce--)
-      {
-         if (val_exit() == 0)
-            return 0x00;
-      }
-      while (val_exit() == 0)
-         ;
-      return 0x04;
-   }
-   return 0x00;
-}
-
-//=========================
-void process_menu(void)
-{
-   refresh_menu = 1;
-   loop_not_display = 1;
-   switch (mode)
-   {
-   case 1:
-      if (strlen(str_temp) == strlen(password))
-      {
-         if (strcmp(password, str_temp) == 0)
+      case 5: // AC BINH THUONG
+         LCD_PUTCMD(Line_1);
+         PRINTF(LCD_PUTCHAR, "D.AP AC BTHUONG");
+         clear_lcd();
+         if (flag_error_broken_accu)
          {
-            mode++;
-            time_reset_password = 20; // 4   phut
+            if (flag_error)
+            {
+               LCD_PUTCMD(Line_2);
+               clear_lcd();
+               LCD_PUTCMD(Line_2);
+               PRINTF(LCD_PUTCHAR, "ACCU LOI MPD LOI");
+               clear_lcd();
+            }
+            else
+            {
+               LCD_PUTCMD(Line_2);
+               PRINTF(LCD_PUTCHAR, "ACCU LOI MPD TOT");
+               clear_lcd();
+            }
          }
-      }
-      val_sch_1 = 0;
-      sch_1 = str_temp;
-      *sch_1 = 0;
-      break;
-
-   default:
-      if (++mode > 8)
-         mode = 9; // ve loading screen
-      if (time_reset_password != 0 && mode == 1)
-         mode = 2;
-      break;
-   }
-}
-
-//=========================
-void process_up(void)
-{
-   switch (mode)
-   {
-   case 0: // mang hinh chinh
-      break;
-
-   case 1: // nhap mat khau
-      sch_2 = val_number_default;
-      if (++val_sch_2 > 10)
-         val_sch_2 = 0;
-      sch_2 = sch_2 + val_sch_2;
-      sch_1 = sch_1 + val_sch_1;
-      *sch_1++ = *sch_2;
-      *sch_1 = 0;
-      break;
-
-   case 2: // DIEN AP DC LOW
-      input_dc_lv2 += 0.1;
-      if (input_dc_lv2 > 60)
-      {
-         input_dc_lv2 = 40;
-      }
-      break;
-   case 3: // TG CHAY LIEN TUC
-      if (++timer_chay_lien_tuc > 24)
-      {
-         timer_chay_lien_tuc = 1;
-      }
-      break;
-
-   case 4: // DELTA D.A DC LOW
-      delta_dc += 0.1;
-      if (delta_dc > 1)
-      {
-         delta_dc = 0.1;
-      }
-      break;
-
-   case 5: // TG KTRA DA AC
-      if (++timer_ktra_AC > 240)
-      {
-         timer_ktra_AC = 10;
-      }
-      break;
-
-   case 6: // TG KTRA DA MN
-      if (++timer_ktra_mn > 240)
-      {
-         timer_ktra_mn = 10;
-      }
-      break;
-
-   case 7: // SO LAN KHOI DONG
-      if (++counter_restart_mpd > 4)
-      {
-         counter_restart_mpd = 2;
-      }
-      break;
-   case 8:      // cai dat mat dinh
-      mode = 9; // ve loading screen
-      default_data();
-      write_data();
-      reset_cpu();
-      break;
-   }
-}
-
-//=========================
-void process_down(void)
-{
-   switch (mode)
-   {
-   case 0: // mang hinh chinh
-      break;
-
-   case 1: // nhap mat khau
-      sch_2 = val_number_default;
-      if (--val_sch_2 > 10)
-         val_sch_2 = 10;
-      sch_2 = sch_2 + val_sch_2;
-      sch_1 = sch_1 + val_sch_1;
-      *sch_1++ = *sch_2;
-      *sch_1 = 0;
-      break;
-
-   case 2: // DIEN AP DC LOW
-      input_dc_lv2 -= 0.1;
-      if (input_dc_lv2 < 40)
-      {
-         input_dc_lv2 = 60;
-      }
-      break;
-
-   case 3: // TG CHAY LIEN TUC
-      if (--timer_chay_lien_tuc < 1)
-      {
-         timer_chay_lien_tuc = 24;
-      }
-      break;
-
-   case 4: // DELTA D.A DC LOW
-      delta_dc -= 0.1;
-      if (delta_dc < 0.1)
-      {
-         delta_dc = 1;
-      }
-      break;
-
-   case 5: // TG KTRA DA AC
-      if (--timer_ktra_AC < 10)
-      {
-         timer_ktra_AC = 240;
-      }
-      break;
-
-   case 6: // TG KTRA DA MN
-      if (--timer_ktra_mn < 10)
-      {
-         timer_ktra_mn = 240;
-      }
-      break;
-
-   case 7: // SO LAN KHOI DONG
-      if (--counter_restart_mpd < 2)
-      {
-         counter_restart_mpd = 4;
-      }
-      break;
-   case 8:      // cai dat mat dinh
-      mode = 9; // ve loading screen
-      break;
-   }
-}
-
-//=========================
-void process_exit(void)
-{
-
-   char val_null;
-   val_sch_2 = 0;
-   loop_not_display = 1;
-   switch (mode)
-   {
-   case 0: // mang hinh chinh
-      time_reset_password = 0;
-      break;
-
-   case 1: // nhap mat khau
-      sch_1 = sch_1 + val_sch_1;
-      val_null = *sch_1;
-      if (val_null != 0 && val_null != 0XFF)
-      {
-         if (++val_sch_1 > 16)
-            val_sch_1 = 0;
-         sch_1++;
-         *sch_1++ = 0XFF;
-         *sch_1 = 0;
-      }
-      break;
-   }
-}
-
-void write_eeprom16(unsigned char addr, unsigned long data)
-{
-   write_eeprom(addr, make8(data, 0));
-   write_eeprom(addr + 1, make8(data, 1));
-}
-
-unsigned long read_eeprom16(unsigned char addr)
-{
-   return make16(read_eeprom(addr + 1), read_eeprom(addr));
-}
-
-void write_data(void)
-{
-   wee16(input_dc_lv2_ee, (input_dc_lv2 * 10));
-   wee(timer_chay_lien_tuc_ee, timer_chay_lien_tuc);
-   wee16(delta_dc_ee, (delta_dc * 10));
-   wee(timer_ktra_mn_ee, timer_ktra_mn);
-   wee(timer_ktra_AC_ee, timer_ktra_AC);
-   wee(counter_restart_mpd_ee, counter_restart_mpd);
-}
-
-//=========================
-void read_data(void)
-{
-   input_dc_lv2 = ree16(input_dc_lv2_ee);
-   input_dc_lv2 = input_dc_lv2 / 10;
-   delta_dc = ree16(delta_dc_ee);
-   delta_dc = delta_dc / 10;
-   timer_chay_lien_tuc = ree(timer_chay_lien_tuc_ee);
-   timer_ktra_mn = ree(timer_ktra_mn_ee);
-   timer_ktra_AC = ree(timer_ktra_AC_ee);
-   counter_restart_mpd = ree(counter_restart_mpd_ee);
-}
-
-void disable_reset(void)
-{
-   output_high(clock_reset);
-   delay_ms(1);
-   output_low(clock_reset);
-   delay_ms(1);
-   output_high(clock_reset);
-   delay_ms(1);
-   output_low(clock_reset);
-   delay_ms(1);
-   output_high(clock_reset);
-   delay_ms(1);
-   output_low(clock_reset);
-   delay_ms(1);
-   output_float(clock_reset);
-}
-
-#int_timer0
-void interrupt_timer0()
-{
-   clear_interrupt(INT_TIMER0);
-   set_timer0(62536); // 500us => 65536 - (0.0005/(4/24000000))
-
-   if (mode == 0) // DIMMER LCD
-   {
-      switch (pwm_lcd)
-      {
-      case 0:
-         backlight_on();
+         else if (flag_error)
+         {
+            LCD_PUTCMD(Line_2);
+            clear_lcd();
+            LCD_PUTCMD(Line_2);
+            PRINTF(LCD_PUTCHAR, "DC:%02.1fV MPD LOI", adc_accu);
+            clear_lcd();
+         }
+         else
+         {
+            LCD_PUTCMD(Line_2);
+            PRINTF(LCD_PUTCHAR, "DC:%02.1fV MPD TOT", adc_accu);
+            clear_lcd();
+         }
          break;
-
-      case 1:
-         if (timer_backlight < 30)
-            backlight_off();
+      case 6: // CHAY MPD
+         LCD_PUTCMD(Line_1);
+         PRINTF(LCD_PUTCHAR, "CHAY MPD");
+         clear_lcd();
+         LCD_PUTCMD(Line_2);
+         PRINTF(LCD_PUTCHAR, "LAN: %01u", val_counter_restart_mpd);
+         clear_lcd();
          break;
-
-      case 7:
-         if (timer_backlight < 120)
-            backlight_off();
+      case 7: // error
+         LCD_PUTCMD(Line_1);
+         PRINTF(LCD_PUTCHAR, "MPD LOI");
+         clear_lcd();
+         LCD_PUTCMD(Line_2);
+         if (flag_error_broken_accu)
+         {
+            PRINTF(LCD_PUTCHAR, "ACCU LOI");
+         }
+         clear_lcd();
          break;
       }
    }
-   else
-   {
-      backlight_on();
-   }
-   if (++pwm_lcd > 10)
-      pwm_lcd = 0;
 
-   if (++counter_timer0 > 500)
-   { // timer 1s
-      counter_timer0 = 0;
-      DISABLE_INTERRUPTS(INT_TIMER0);
+   void default_data(void)
+   {
+      input_dc_lv2 = input_dc_lv2_md;
+      delta_dc = delta_dc_md;
+      counter_restart_mpd = counter_restart_mpd_md; // LONG SO LAN KHOI DONG LAI MPD
+      timer_chay_lien_tuc = timer_chay_lien_tuc_md; // LONG DELAY 2
+      timer_ktra_AC = timer_ktra_AC_md;             // LONG KT AC TIMER
+      timer_ktra_mn = timer_ktra_mn_md;             // LONG KT MN TIMER
+      flag_error = 0;                               // LONG FLAG = 0 la ko loi, = 1 la LOI
+   }
+   void display_center(void)
+   {
+      unsigned char menu_main[10][17] = {{""},
+                                         {"MAT KHAU !"},
+                                         {"DIEN AP DC LOW"},
+                                         {"TG CHAY LIEN TUC"},
+                                         {"DELTA D.A DC LOW"},
+                                         {"TG KTRA D.AP AC"},
+                                         {"TG KTRA D.AP MPD"},
+                                         {"SO LAN KHOI DONG"},
+                                         {"CAI DAT MAC DINH"},
+                                         {""}};
+
+      if (refresh_menu)
+      {
+         LCD_PUTCMD(Line_1); // Dua hien thi chu dau dong hang` duoi
+         PRINTF(LCD_PUTCHAR, "%s", menu_main[mode]);
+         clear_lcd();
+      }
+      LCD_PUTCMD(Line_2); // Dua hien thi chu dau dong hang` duoi
 
       switch (mode)
       {
-      case 0: // TINH NANG CHINH
-         if (flag_mn == 1 && val_timer_ktra_mn > 0)
-         {
-            val_timer_ktra_mn--;
-         }
+      case 0: // LCD TINH NANG CHINH
          switch (state_AC)
          {
-         case 0: // TIMER DEM DO AC
-            if (val_timer_ktra_AC > 0)
-               val_timer_ktra_AC--;
+         case 0:
+            display(do_ac);
+            break;
+         case 1:
+            display(ac_bthg);
+            break;
+         case 2:
+            display(phong_accu);
             break;
          case 3:
-            switch (state_mn)
-            {
-            case 0:
-               if (val_timer_on_mpd > 0)
-               {
-                  val_timer_on_mpd--;
-               }
-               break;
-            case 1:
-               break;
-            case 2:
-               if (val_timer_off_mpd > 0)
-               {
-                  val_timer_off_mpd--;
-               }
-               break;
-            }
             break;
          case 4:
-            if (--flag_timer_chay_lien_tuc_60s > 59)
-            {
-               flag_timer_chay_lien_tuc_60s = 59;
-               if (--flag_timer_chay_lien_tuc_60p > 59)
-               {
-                  flag_timer_chay_lien_tuc_60p = 59;
-                  if (val_timer_chay_lien_tuc > 0)
-                     val_timer_chay_lien_tuc--;
-               }
-            }
+            display(tg_chay_lien_tuc);
+            break;
+         case 10:
+            display(error);
             break;
          }
          break;
+      case 1:                // nhap mat khau
+         LCD_PUTCMD(Line_2); // Dua hien thi chu dau dong hang` duoi
+         sch_1 = str_temp;
+         sch_1_s_set();
+         break;
+
+      case 2:                // DIEN AP DC LOW
+         LCD_PUTCMD(Line_2); // Dua hien thi chu dau dong hang` duoi
+         PRINTF(LCD_PUTCHAR, "VOLT DC: <%02.1f>", input_dc_lv2);
+         clear_lcd();
+         break;
+
+      case 3:                // TG CHAY LIEN TUC
+         LCD_PUTCMD(Line_2); // Dua hien thi chu dau dong hang` duoi
+         PRINTF(LCD_PUTCHAR, "GIO: <%01u>", timer_chay_lien_tuc);
+         clear_lcd();
+         break;
+
+      case 4:                // DELTA D.A DC LOW
+         LCD_PUTCMD(Line_2); // Dua hien thi chu dau dong hang` duoi
+         PRINTF(LCD_PUTCHAR, "VOLT DC: <%02.1f>", delta_dc);
+         clear_lcd();
+         break;
+      case 5:                // TG KTRA DA AC
+         LCD_PUTCMD(Line_2); // Dua hien thi chu dau dong hang` duoi
+         PRINTF(LCD_PUTCHAR, "GIAY: <%01u>", timer_ktra_AC);
+         clear_lcd();
+         break;
+      case 6:                // TG KTRA DA MN
+         LCD_PUTCMD(Line_2); // Dua hien thi chu dau dong hang` duoi
+         PRINTF(LCD_PUTCHAR, "GIAY: <%01u>", timer_ktra_mn);
+         clear_lcd();
+         break;
+      case 7:                // SO LAN KHOI DONG
+         LCD_PUTCMD(Line_2); // Dua hien thi chu dau dong hang` duoi
+         PRINTF(LCD_PUTCHAR, "LAN: <%01u>", counter_restart_mpd);
+         clear_lcd();
+         break;
+      case 8: // cai dat mat dinh
+         yesno();
+         break;
+      case 9:
+         LCD_PUTCMD(Line_1);
+         loading();
+         clear_lcd();
+         LCD_PUTCMD(Line_2);
+         clear_lcd();
+         break;
       }
-      // TRO VE MANG HINH CHINH KHI KHONG NHAN NUT
-      if (timer_exit != 0)
-         timer_exit--;
-      if (timer_exit == 0)
+      refresh_menu = 0; // cap nhat du lieu mang hinh xong
+   }
+
+   //=========================
+   void reset_timer_data(void)
+   {
+      val_counter_restart_mpd = 1;
+      counter_restart_mpd_current = counter_restart_mpd;
+      val_timer_chay_lien_tuc = flag_error_broken_accu ? 24 : timer_chay_lien_tuc;
+      val_timer_on_mpd = timer_on_mpd;
+      val_timer_off_mpd = timer_off_mpd;
+      val_timer_ktra_mn = timer_ktra_mn;
+      state_mn = 0;
+      flag_timer_chay_lien_tuc_60s = 0, flag_timer_chay_lien_tuc_60p = 0;
+   }
+
+   void lcd_printf(char code_printf)
+   {
+      switch (code_printf)
       {
-         mode = 0; // ve loading screen
-      }
+      case 0:
+         PRINTF(LCD_PUTCHAR, "                 ");
+         break;
 
-      // DEN LCD
-      if (timer_backlight != 0)
-         timer_backlight--;
+      case 9:
+         PRINTF(LCD_PUTCHAR, "  <YES || NO>");
+         break;
 
-      // timer 1 phut
-      if (--flag_timer_60s_password > 59)
-      {
-         flag_timer_60s_password = 59;
-         loop_not_display = 1;
-         if (time_reset_password != 0)
-            time_reset_password--;
+      case 10:
 
-         // nhan nut up mot luc reset ve mat dinh
+         if (++val_loading > 5)
+         {
+            val_loading = 0;
+            mode = 0;
+         }
+         PRINTF(LCD_PUTCHAR, "Loading ");
+         switch (val_loading)
+         {
+         case 0:
+            PRINTF(LCD_PUTCHAR, ".  ");
+            break;
+
+         case 1:
+            PRINTF(LCD_PUTCHAR, ".. ");
+            break;
+
+         case 2:
+            PRINTF(LCD_PUTCHAR, "...");
+            break;
+
+         case 3:
+            PRINTF(LCD_PUTCHAR, " ..");
+            break;
+
+         case 4:
+            PRINTF(LCD_PUTCHAR, "  .");
+            break;
+
+         case 5:
+            PRINTF(LCD_PUTCHAR, "   ");
+            break;
+         }
+         break;
+
+      case 11:
+         PRINTF(LCD_PUTCHAR, "%s<", sch_1);
+         break;
       }
    }
-   enable_interrupts(INT_TIMER0);
-}
+   //=======================================
+   char key_scan(void)
+   {
+      unsigned long bounce = 200;
+
+      if (val_mode() == 1)
+      {
+         while (bounce--)
+         {
+            if (val_mode() == 0)
+               return 0x00;
+         }
+         bounce = 1024;
+         while (bounce--)
+         {
+            if (val_mode() == 0)
+               return 0x01;
+         }
+         return 0x01;
+      }
+
+      else if (val_up() == 1)
+      {
+         while (bounce--)
+         {
+            if (val_up() == 0)
+               return 0x00;
+         }
+         bounce = 256;
+         while (bounce--)
+         {
+            if (val_up() == 0)
+               return 0x02;
+         }
+         return 0x02;
+      }
+
+      else if (val_down() == 1)
+      {
+         while (bounce--)
+         {
+            if (val_down() == 0)
+               return 0x00;
+         }
+         bounce = 256;
+         while (bounce--)
+         {
+            if (val_down() == 0)
+               return 0x03;
+         }
+         return 0x03;
+      }
+
+      else if (val_exit() == 1)
+      {
+         while (bounce--)
+         {
+            if (val_exit() == 0)
+               return 0x00;
+         }
+         while (val_exit() == 0)
+            ;
+         return 0x04;
+      }
+      return 0x00;
+   }
+
+   //=========================
+   void process_menu(void)
+   {
+      refresh_menu = 1;
+      loop_not_display = 1;
+      switch (mode)
+      {
+      case 1:
+         if (strlen(str_temp) == strlen(password))
+         {
+            if (strcmp(password, str_temp) == 0)
+            {
+               mode++;
+               time_reset_password = 20; // 4   phut
+            }
+         }
+         val_sch_1 = 0;
+         sch_1 = str_temp;
+         *sch_1 = 0;
+         break;
+
+      default:
+         if (++mode > 8)
+            mode = 9; // ve loading screen
+         if (time_reset_password != 0 && mode == 1)
+            mode = 2;
+         break;
+      }
+   }
+
+   //=========================
+   void process_up(void)
+   {
+      switch (mode)
+      {
+      case 0: // mang hinh chinh
+         break;
+
+      case 1: // nhap mat khau
+         sch_2 = val_number_default;
+         if (++val_sch_2 > 10)
+            val_sch_2 = 0;
+         sch_2 = sch_2 + val_sch_2;
+         sch_1 = sch_1 + val_sch_1;
+         *sch_1++ = *sch_2;
+         *sch_1 = 0;
+         break;
+
+      case 2: // DIEN AP DC LOW
+         input_dc_lv2 += 0.1;
+         if (input_dc_lv2 > 60)
+         {
+            input_dc_lv2 = 40;
+         }
+         break;
+      case 3: // TG CHAY LIEN TUC
+         if (++timer_chay_lien_tuc > 24)
+         {
+            timer_chay_lien_tuc = 1;
+         }
+         break;
+
+      case 4: // DELTA D.A DC LOW
+         delta_dc += 0.1;
+         if (delta_dc > 1)
+         {
+            delta_dc = 0.1;
+         }
+         break;
+
+      case 5: // TG KTRA DA AC
+         if (++timer_ktra_AC > 240)
+         {
+            timer_ktra_AC = 10;
+         }
+         break;
+
+      case 6: // TG KTRA DA MN
+         if (++timer_ktra_mn > 240)
+         {
+            timer_ktra_mn = 10;
+         }
+         break;
+
+      case 7: // SO LAN KHOI DONG
+         if (++counter_restart_mpd > 4)
+         {
+            counter_restart_mpd = 2;
+         }
+         break;
+      case 8:      // cai dat mat dinh
+         mode = 9; // ve loading screen
+         default_data();
+         write_data();
+         reset_cpu();
+         break;
+      }
+   }
+
+   //=========================
+   void process_down(void)
+   {
+      switch (mode)
+      {
+      case 0: // mang hinh chinh
+         break;
+
+      case 1: // nhap mat khau
+         sch_2 = val_number_default;
+         if (--val_sch_2 > 10)
+            val_sch_2 = 10;
+         sch_2 = sch_2 + val_sch_2;
+         sch_1 = sch_1 + val_sch_1;
+         *sch_1++ = *sch_2;
+         *sch_1 = 0;
+         break;
+
+      case 2: // DIEN AP DC LOW
+         input_dc_lv2 -= 0.1;
+         if (input_dc_lv2 < 40)
+         {
+            input_dc_lv2 = 60;
+         }
+         break;
+
+      case 3: // TG CHAY LIEN TUC
+         if (--timer_chay_lien_tuc < 1)
+         {
+            timer_chay_lien_tuc = 24;
+         }
+         break;
+
+      case 4: // DELTA D.A DC LOW
+         delta_dc -= 0.1;
+         if (delta_dc < 0.1)
+         {
+            delta_dc = 1;
+         }
+         break;
+
+      case 5: // TG KTRA DA AC
+         if (--timer_ktra_AC < 10)
+         {
+            timer_ktra_AC = 240;
+         }
+         break;
+
+      case 6: // TG KTRA DA MN
+         if (--timer_ktra_mn < 10)
+         {
+            timer_ktra_mn = 240;
+         }
+         break;
+
+      case 7: // SO LAN KHOI DONG
+         if (--counter_restart_mpd < 2)
+         {
+            counter_restart_mpd = 4;
+         }
+         break;
+      case 8:      // cai dat mat dinh
+         mode = 9; // ve loading screen
+         break;
+      }
+   }
+
+   //=========================
+   void process_exit(void)
+   {
+
+      char val_null;
+      val_sch_2 = 0;
+      loop_not_display = 1;
+      switch (mode)
+      {
+      case 0: // mang hinh chinh
+         time_reset_password = 0;
+         break;
+
+      case 1: // nhap mat khau
+         sch_1 = sch_1 + val_sch_1;
+         val_null = *sch_1;
+         if (val_null != 0 && val_null != 0XFF)
+         {
+            if (++val_sch_1 > 16)
+               val_sch_1 = 0;
+            sch_1++;
+            *sch_1++ = 0XFF;
+            *sch_1 = 0;
+         }
+         break;
+      }
+   }
+
+   void write_eeprom16(unsigned char addr, unsigned long data)
+   {
+      write_eeprom(addr, make8(data, 0));
+      write_eeprom(addr + 1, make8(data, 1));
+   }
+
+   unsigned long read_eeprom16(unsigned char addr)
+   {
+      return make16(read_eeprom(addr + 1), read_eeprom(addr));
+   }
+
+   void write_data(void)
+   {
+      wee16(input_dc_lv2_ee, (input_dc_lv2 * 10));
+      wee(timer_chay_lien_tuc_ee, timer_chay_lien_tuc);
+      wee16(delta_dc_ee, (delta_dc * 10));
+      wee(timer_ktra_mn_ee, timer_ktra_mn);
+      wee(timer_ktra_AC_ee, timer_ktra_AC);
+      wee(counter_restart_mpd_ee, counter_restart_mpd);
+   }
+
+   //=========================
+   void read_data(void)
+   {
+      input_dc_lv2 = ree16(input_dc_lv2_ee);
+      input_dc_lv2 = input_dc_lv2 / 10;
+      delta_dc = ree16(delta_dc_ee);
+      delta_dc = delta_dc / 10;
+      timer_chay_lien_tuc = ree(timer_chay_lien_tuc_ee);
+      timer_ktra_mn = ree(timer_ktra_mn_ee);
+      timer_ktra_AC = ree(timer_ktra_AC_ee);
+      counter_restart_mpd = ree(counter_restart_mpd_ee);
+   }
+
+   void disable_reset(void)
+   {
+      output_high(clock_reset);
+      delay_ms(1);
+      output_low(clock_reset);
+      delay_ms(1);
+      output_high(clock_reset);
+      delay_ms(1);
+      output_low(clock_reset);
+      delay_ms(1);
+      output_high(clock_reset);
+      delay_ms(1);
+      output_low(clock_reset);
+      delay_ms(1);
+      output_float(clock_reset);
+   }
+
+#int_timer0
+   void interrupt_timer0()
+   {
+      clear_interrupt(INT_TIMER0);
+      set_timer0(62536); // 500us => 65536 - (0.0005/(4/24000000))
+
+      if (mode == 0) // DIMMER LCD
+      {
+         switch (pwm_lcd)
+         {
+         case 0:
+            backlight_on();
+            break;
+
+         case 1:
+            if (timer_backlight < 30)
+               backlight_off();
+            break;
+
+         case 7:
+            if (timer_backlight < 120)
+               backlight_off();
+            break;
+         }
+      }
+      else
+      {
+         backlight_on();
+      }
+      if (++pwm_lcd > 10)
+         pwm_lcd = 0;
+
+      if (++counter_timer0 > 500)
+      { // timer 1s
+         counter_timer0 = 0;
+         DISABLE_INTERRUPTS(INT_TIMER0);
+
+         switch (mode)
+         {
+         case 0: // TINH NANG CHINH
+            if (flag_mn == 1 && val_timer_ktra_mn > 0)
+            {
+               val_timer_ktra_mn--;
+            }
+            switch (state_AC)
+            {
+            case 0: // TIMER DEM DO AC
+               if (val_timer_ktra_AC > 0)
+                  val_timer_ktra_AC--;
+               break;
+            case 3:
+               switch (state_mn)
+               {
+               case 0:
+                  if (val_timer_on_mpd > 0)
+                  {
+                     val_timer_on_mpd--;
+                  }
+                  break;
+               case 1:
+                  break;
+               case 2:
+                  if (val_timer_off_mpd > 0)
+                  {
+                     val_timer_off_mpd--;
+                  }
+                  break;
+               }
+               break;
+            case 4:
+               if (--flag_timer_chay_lien_tuc_60s > 59)
+               {
+                  flag_timer_chay_lien_tuc_60s = 59;
+                  if (--flag_timer_chay_lien_tuc_60p > 59)
+                  {
+                     flag_timer_chay_lien_tuc_60p = 59;
+                     if (val_timer_chay_lien_tuc > 0)
+                        val_timer_chay_lien_tuc--;
+                  }
+               }
+               break;
+            }
+            break;
+         }
+         // TRO VE MANG HINH CHINH KHI KHONG NHAN NUT
+         if (timer_exit != 0)
+            timer_exit--;
+         if (timer_exit == 0)
+         {
+            mode = 0; // ve loading screen
+         }
+
+         // DEN LCD
+         if (timer_backlight != 0)
+            timer_backlight--;
+
+         // timer 1 phut
+         if (--flag_timer_60s_password > 59)
+         {
+            flag_timer_60s_password = 59;
+            loop_not_display = 1;
+            if (time_reset_password != 0)
+               time_reset_password--;
+
+            // nhan nut up mot luc reset ve mat dinh
+         }
+      }
+      enable_interrupts(INT_TIMER0);
+   }
