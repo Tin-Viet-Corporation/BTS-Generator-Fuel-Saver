@@ -114,8 +114,6 @@ void main()
             break;
          case 2: // mat AC: phong accu
             reset_timer_data();
-            output_low(out_fuel);
-            output_low(out_gen_active);
             if (flag_error_broken_accu)
             {
                val_timer_chay_lien_tuc = 24;
@@ -126,7 +124,7 @@ void main()
                val_timer_chay_lien_tuc = 1;
                state_AC = 3;
             }
-            else if (adc_accu > DC_LOW_LVL_2 && isBelowDCLowLv1(adc_accu, input_dc_lv2, delta_dc))
+            else if (isBelowDCLowLv1AndAboveLv2(adc_accu, input_dc_lv2, delta_dc))
             {
                state_AC = 3;
             }
