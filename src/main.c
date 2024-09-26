@@ -399,7 +399,7 @@ void check_AC(void)
          val_timer_ktra_AC = timer_ktra_AC;
       }
    }
-   else if (state_AC == 1 && isBelowDCLowLv1AndAboveLv2(adc_accu, input_dc_lv2, delta_dc))
+   else if (state_AC <= 1 && isBelowDCLowLv1AndAboveLv2(adc_accu, input_dc_lv2, delta_dc))
    {
       state_AC = 0;
       if (val_timer_ktra_AC <= 0)
