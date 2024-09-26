@@ -24,7 +24,7 @@ char timer_backlight = 240;
 char val_counter_restart_mpd = 1, counter_restart_mpd = 4, counter_restart_mpd_md = 4; // LONG SO LAN KHOI DONG LAI MPD
 char counter_restart_mpd_current = 4;
 char val_timer_chay_lien_tuc = 3, timer_chay_lien_tuc = 3, timer_chay_lien_tuc_md = 3; // LONG DELAY 2
-char val_timer_ktra_AC = 60, timer_ktra_AC = 60, timer_ktra_AC_md = 60;                // LONG KT AC TIMER
+char val_timer_ktra_AC = 60, timer_ktra_AC = 60, timer_ktra_AC_md = 30;                // LONG KT AC TIMER
 char val_timer_ktra_mn = 30, timer_ktra_mn = 30, timer_ktra_mn_md = 30;                // LONG KT MN TIMER
 char val_timer_on_mpd = 20, timer_on_mpd = 20;
 char val_timer_off_mpd = 20, timer_off_mpd = 20;
@@ -311,7 +311,7 @@ void init_data(void)
 
    val_counter_restart_mpd = 1, counter_restart_mpd_current = counter_restart_mpd, counter_restart_mpd_md = 4; // LONG SO LAN KHOI DONG LAI MPD
    val_timer_chay_lien_tuc = timer_chay_lien_tuc, timer_chay_lien_tuc_md = 3;                                  // LONG DELAY 2
-   val_timer_ktra_AC = timer_ktra_AC, timer_ktra_AC_md = 60;                                                   // LONG KT AC TIMER
+   val_timer_ktra_AC = timer_ktra_AC, timer_ktra_AC_md = 30;                                                   // LONG KT AC TIMER
    flag_mn = 0;
    val_timer_ktra_mn = timer_ktra_mn, timer_ktra_mn_md = 30; // LONG KT MN TIMER
    val_timer_on_mpd = 20, timer_on_mpd = 20;
