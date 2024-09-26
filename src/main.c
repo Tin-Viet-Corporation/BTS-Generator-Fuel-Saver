@@ -336,6 +336,8 @@ void init_data(void)
 void verify_dc(void)
 {
    get_adc_accu();
+   delay_ms(1);
+   get_adc_accu();
    if (adc_accu <= DC_LOW_LVL_2)
    {
       flag_error_broken_accu = 1;
