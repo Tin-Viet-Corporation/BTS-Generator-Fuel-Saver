@@ -387,18 +387,6 @@ void check_AC(void)
          val_timer_ktra_AC = timer_ktra_AC;
       }
    }
-   else if (state_AC != 1 && status_AC() && !flag_unstable_AC)
-   {
-      state_AC = 0; // chay trang thai dem do AC
-      if (val_timer_ktra_AC <= 0)
-      {
-         if (status_AC())
-         {
-            state_AC = 1;
-         }
-         val_timer_ktra_AC = timer_ktra_AC;
-      }
-   }
    else if (state_AC <= 1 && isBelowDCLowLv1AndAboveLv2(adc_accu, input_dc_lv2, delta_dc))
    {
       state_AC = 0;
@@ -408,6 +396,18 @@ void check_AC(void)
          {
             flag_unstable_AC = 1;
             state_AC = 2;
+         }
+         val_timer_ktra_AC = timer_ktra_AC;
+      }
+   }
+   else if (state_AC != 1 && status_AC() && !flag_unstable_AC)
+   {
+      state_AC = 0; // chay trang thai dem do AC
+      if (val_timer_ktra_AC <= 0)
+      {
+         if (status_AC())
+         {
+            state_AC = 1;
          }
          val_timer_ktra_AC = timer_ktra_AC;
       }
